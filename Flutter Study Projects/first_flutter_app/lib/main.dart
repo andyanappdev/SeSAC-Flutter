@@ -65,6 +65,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Home'),
       ),
+      body: Center(
+        child: Text(
+          '0',
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: 70,
+          ),
+        ),
+      ),
     ); // material 디자인 기본 뼈대 위젯
   }
 }
