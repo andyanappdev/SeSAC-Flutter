@@ -61,6 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
    */
   @override
   Widget build(BuildContext context) {
-    return Scaffold(); // material 디자인 기본 뼈대 위젯
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+    ); // material 디자인 기본 뼈대 위젯
   }
 }
