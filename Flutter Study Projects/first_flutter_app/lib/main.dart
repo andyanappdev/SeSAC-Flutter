@@ -74,6 +74,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print('버튼이 click 되었음');
+        }, // button이 눌렸을때 작동하는 코드를 중괄호 안에 작성
+        child: Icon(Icons.add),
+      ),
     ); // material 디자인 기본 뼈대 위젯
   }
 }
