@@ -68,12 +68,24 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Home'),
       ),
       body: Center(
-        child: Text(
-          '$count', // 화면에 표시될 숫자를 count 변수 사용
-          style: TextStyle(
-            color: Colors.red,
-            fontSize: 70,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, // column 위치 설정 (가운데 정렬)
+          children: [
+            Text(
+              'Number',
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 40,
+              ),
+            ),
+            Text(
+              '$count', // 화면에 표시될 숫자를 count 변수 사용
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 70,
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
