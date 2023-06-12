@@ -23,6 +23,17 @@ State 클래스를 상속 받은 클래스를 상태 클래스라고 한다.
  */
 class _MainPageState extends State<MainPage> {
   int number = 0;
+  // String _text = '';
+  // Creates a controller for an editable text field
+  final _textController = TextEditingController();
+
+  // Remember to dispose of the TextEditingController when it is no longer needed.
+  // This will ensure we discard any resources used by the object.
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   /*
    화면에 UI를 그리는 메서드 (그려질 위젯을 반환)
@@ -86,20 +97,24 @@ class _MainPageState extends State<MainPage> {
                   Expanded(
                     flex: 4,
                     child: TextField(
+                      controller: _textController, // controller 설정 (위에서 생성해둔)
                       decoration: InputDecoration(
                         labelText: 'Type Text',
                         border: OutlineInputBorder(),
                       ),
+                      // textfield의 값이 변경될때마다 실행
                       onChanged: (text) {
-                        // textfield의 값이 변경될때마다 실행
-                        print(text);
+                        // _text = text;
                       },
                     ),
                   ),
                   Expanded(
                     flex: 2,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print(_textController
+                            .text); // controller를 통해서 textField에 입력된 text를 전달 받을수 있다
+                      },
                       child: Text('Login'),
                     ),
                   ),
