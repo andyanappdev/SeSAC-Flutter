@@ -81,18 +81,29 @@ class _MainPageState extends State<MainPage> {
                 onPressed: () {},
                 child: Text('OutlinedButton'),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'Type Text',
-                    border: OutlineInputBorder(),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 4,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Type Text',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (text) {
+                        // textfield의 값이 변경될때마다 실행
+                        print(text);
+                      },
+                    ),
                   ),
-                  onChanged: (text) {
-                    // textfield의 값이 변경될때마다 실행
-                    print(text);
-                  },
-                ),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('Login'),
+                    ),
+                  ),
+                ],
               ),
               Image.network(
                 'https://uploads-ssl.webflow.com/5f841209f4e71b2d70034471/60bb4a2e143f632da3e56aea_Flutter%20app%20development%20(2).png',
