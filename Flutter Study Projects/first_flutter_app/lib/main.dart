@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart'; //  material 디자인 위젯들이 포함되어 있는 라이브러리
 
-import 'package:first_flutter_app/my_home_page.dart'; // refactoring으로 이동한 화면을 그리는 코드가 위치한 파일 import
+import 'package:first_flutter_app/main_page.dart'; // refactoring으로 이동한 화면을 그리는 코드가 위치한 파일 import
 
 // 앱 시작 부분
 void main() {
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(), // 표시할 화면의 인스턴스
+      home: const MainPage(), // 표시할 화면의 인스턴스
     );
   }
 }
