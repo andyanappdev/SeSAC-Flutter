@@ -35,81 +35,85 @@ class _MainPageState extends State<MainPage> {
         title: Text('Home'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // column 위치 설정 (가운데 정렬)
-          children: [
-            Container(
-              color: Colors.purple,
-              width: 50,
-              height: 50,
-            ),
-            SizedBox(
-              // widget들 간 간격을 주기 위해 사용 (Container와 비슷, 그러나 성능적으로 SizedBox가 우위)
-              height: 15,
-            ),
-            Container(
-              height: 15,
-            ),
-            Text(
-              'Number',
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 30,
+        // ScrollView 적용
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment:
+                MainAxisAlignment.center, // column 위치 설정 (가운데 정렬)
+            children: [
+              Container(
+                color: Colors.purple,
+                width: 100,
+                height: 100,
               ),
-            ),
-            Text(
-              '$number', // 화면에 표시될 숫자를 count 변수 사용
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 20,
+              SizedBox(
+                // widget들 간 간격을 주기 위해 사용 (Container와 비슷, 그러나 성능적으로 SizedBox가 우위)
+                height: 15,
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print('ElevateButton');
-              },
-              child: Text('ElevateButton'),
-            ),
-            TextButton(
-              onPressed: () {},
-              child: Text('TextButton'),
-            ),
-            OutlinedButton(
-              onPressed: () {},
-              child: Text('OutlinedButton'),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Type Text',
-                  border: OutlineInputBorder(),
+              Container(
+                height: 15,
+              ),
+              Text(
+                'Number',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 30,
                 ),
-                onChanged: (text) {
-                  // textfield의 값이 변경될때마다 실행
-                  print(text);
+              ),
+              Text(
+                '$number', // 화면에 표시될 숫자를 count 변수 사용
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 30,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  print('ElevateButton');
                 },
+                child: Text('ElevateButton'),
               ),
-            ),
-            Image.network(
-              'https://uploads-ssl.webflow.com/5f841209f4e71b2d70034471/60bb4a2e143f632da3e56aea_Flutter%20app%20development%20(2).png',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-            Container(
-              color: Colors.red,
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Image.asset(
-                  'assets/flutter.jpg',
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
+              TextButton(
+                onPressed: () {},
+                child: Text('TextButton'),
+              ),
+              OutlinedButton(
+                onPressed: () {},
+                child: Text('OutlinedButton'),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Type Text',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (text) {
+                    // textfield의 값이 변경될때마다 실행
+                    print(text);
+                  },
                 ),
               ),
-            ),
-          ],
+              Image.network(
+                'https://uploads-ssl.webflow.com/5f841209f4e71b2d70034471/60bb4a2e143f632da3e56aea_Flutter%20app%20development%20(2).png',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+              Container(
+                color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    'assets/flutter.jpg',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
