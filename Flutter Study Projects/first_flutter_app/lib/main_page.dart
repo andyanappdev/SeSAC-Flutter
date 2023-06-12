@@ -114,12 +114,15 @@ class _MainPageState extends State<MainPage> {
                       onPressed: () {
                         print(_textController
                             .text); // controller를 통해서 textField에 입력된 text를 전달 받을수 있다
+                        // 화면 다시 그리기
+                        setState(() {});
                       },
                       child: Text('Login'),
                     ),
                   ),
                 ],
               ),
+              Text(_textController.text), // textField 입력값 화면에 display
               Image.network(
                 'https://uploads-ssl.webflow.com/5f841209f4e71b2d70034471/60bb4a2e143f632da3e56aea_Flutter%20app%20development%20(2).png',
                 width: 100,
