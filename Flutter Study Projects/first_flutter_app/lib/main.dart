@@ -21,9 +21,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // Material Design (Flutter Platform 에서 사용되는 디자인)
     return MaterialApp(
       // bulid() 메서드가 return 하는 MaterialApp() 인스턴스
-      // 아래의 properties를 설정하여 위젯의 속성을 표현
+      // 아래의 property들을 설정하여 위젯의 속성을 표현
       title: 'Flutter Demo', // title 설정
       theme: ThemeData(
         // theme 설정

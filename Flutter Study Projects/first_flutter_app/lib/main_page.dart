@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // 시작 클래스가 실제로 표시하는 클래스 (매인화면)
 /*
-MyHomePage 클래스는 StatefulWidget 클래스를 상속 받은 subclass
+MainPage 클래스는 StatefulWidget 클래스를 상속 받은 subclass
 상태가 있는 위젯을 정의하는 StatefulWidget 클래스 사용
  */
 class MainPage extends StatefulWidget {
@@ -10,14 +10,14 @@ class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
   @override
-  // MyHomePage 클래스에는 상속 받은 createState() 메서드를 재정의하여 _MyHomePageState() 클래스의 인스턴스를 return
+  // MainPage 클래스에는 상속 받은 createState() 메서드를 재정의하여 _MyHomePageState() 클래스의 인스턴스를 return
   // createState() 메서드는 StatefulWidget이 생성될 때 한번만 실행!
   State<MainPage> createState() => _MainPageState();
 }
 
-// MyHomePage 클래스의 상태를 나타내는 State 클래스
+// MainPage 클래스의 상태를 나타내는 State 클래스
 /*
-_MyHomePageState 클래스는 State<MyHomePage> 클래스를 상속 받은 subclass
+_MainPageState 클래스는 State<MainPage> 클래스를 상속 받은 subclass
 State 클래스를 상속 받은 클래스를 상태 클래스라고 한다.
 상태 클래스는 변경 가능한 상태를 property 변수로 표현 하며, 해당 변수의 값을 변경하여 화면을 다시 그릴수 있다.
  */
@@ -65,6 +65,16 @@ class _MainPageState extends State<MainPage> {
             OutlinedButton(
               onPressed: () {},
               child: Text('OutlinedButton'),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Type Text',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (text) {
+                // textfield의 값이 변경될때마다 실행
+                print(text);
+              },
             )
           ],
         ),
