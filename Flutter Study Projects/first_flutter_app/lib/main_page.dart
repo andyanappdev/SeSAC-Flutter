@@ -43,18 +43,25 @@ class _MainPageState extends State<MainPage> {
               width: 50,
               height: 50,
             ),
+            SizedBox(
+              // widget들 간 간격을 주기 위해 사용 (Container와 비슷, 그러나 성능적으로 SizedBox가 우위)
+              height: 15,
+            ),
+            Container(
+              height: 15,
+            ),
             Text(
               'Number',
               style: TextStyle(
                 color: Colors.blue,
-                fontSize: 40,
+                fontSize: 30,
               ),
             ),
             Text(
               '$number', // 화면에 표시될 숫자를 count 변수 사용
               style: TextStyle(
                 color: Colors.red,
-                fontSize: 30,
+                fontSize: 20,
               ),
             ),
             ElevatedButton(
@@ -71,15 +78,18 @@ class _MainPageState extends State<MainPage> {
               onPressed: () {},
               child: Text('OutlinedButton'),
             ),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Type Text',
-                border: OutlineInputBorder(),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: 'Type Text',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (text) {
+                  // textfield의 값이 변경될때마다 실행
+                  print(text);
+                },
               ),
-              onChanged: (text) {
-                // textfield의 값이 변경될때마다 실행
-                print(text);
-              },
             ),
             Image.network(
               'https://uploads-ssl.webflow.com/5f841209f4e71b2d70034471/60bb4a2e143f632da3e56aea_Flutter%20app%20development%20(2).png',
@@ -90,7 +100,7 @@ class _MainPageState extends State<MainPage> {
             Container(
               color: Colors.red,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Image.asset(
                   'assets/flutter.jpg',
                   width: 100,
