@@ -38,6 +38,11 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, // column 위치 설정 (가운데 정렬)
           children: [
+            Container(
+              color: Colors.purple,
+              width: 50,
+              height: 50,
+            ),
             Text(
               'Number',
               style: TextStyle(
@@ -82,11 +87,17 @@ class _MainPageState extends State<MainPage> {
               height: 100,
               fit: BoxFit.cover,
             ),
-            Image.asset(
-              'assets/flutter.jpg',
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
+            Container(
+              color: Colors.red,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  'assets/flutter.jpg',
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ],
         ),
