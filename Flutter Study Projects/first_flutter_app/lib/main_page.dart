@@ -24,12 +24,13 @@ State 클래스를 상속 받은 클래스를 상태 클래스라고 한다.
 class _MainPageState extends State<MainPage> {
   int number = 0;
   // String _text = '';
-  // Creates a controller for an editable text field
-  final _textController = TextEditingController();
+  // editable textfield를 컨트롤하는(controller) 인스턴스 생성
+  final TextEditingController _textController = TextEditingController();
 
   // Remember to dispose of the TextEditingController when it is no longer needed.
   // This will ensure we discard any resources used by the object.
   @override
+  // 화면이 닫힐때 호출 되는 메서드
   void dispose() {
     _textController.dispose();
     super.dispose();
