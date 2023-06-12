@@ -49,7 +49,7 @@ class _MainPageState extends State<MainPage> {
               '$number', // 화면에 표시될 숫자를 count 변수 사용
               style: TextStyle(
                 color: Colors.red,
-                fontSize: 70,
+                fontSize: 30,
               ),
             ),
             ElevatedButton(
@@ -75,7 +75,19 @@ class _MainPageState extends State<MainPage> {
                 // textfield의 값이 변경될때마다 실행
                 print(text);
               },
-            )
+            ),
+            Image.network(
+              'https://uploads-ssl.webflow.com/5f841209f4e71b2d70034471/60bb4a2e143f632da3e56aea_Flutter%20app%20development%20(2).png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+            Image.asset(
+              'assets/flutter.jpg',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ],
         ),
       ),
