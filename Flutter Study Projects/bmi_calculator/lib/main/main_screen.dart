@@ -9,7 +9,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final _formKey = GlobalKey<FormState>(); // Form의 상태를 담아두는 key
+  // Form의 상태를 담아두는 key
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // TextFormField에 입력된 값을 가져올 controller
+  final TextEditingController _heightController = TextEditingController();
+  final TextEditingController _weightController = TextEditingController();
+
+  @override
+  void dispose() {
+    _heightController.dispose();
+    _weightController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +36,7 @@ class _MainScreenState extends State<MainScreen> {
             crossAxisAlignment: CrossAxisAlignment.end, //
             children: [
               TextFormField(
+                controller: _heightController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Height',
@@ -38,8 +50,9 @@ class _MainScreenState extends State<MainScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               TextFormField(
+                controller: _weightController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Weight',
@@ -53,23 +66,23 @@ class _MainScreenState extends State<MainScreen> {
                   return null;
                 },
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
+                  if (_formKey.currentState?.validate() == false) {
                     return;
                   }
 
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ResultScreen(
-                              height: 180,
-                              weight: 78,
+                        builder: (context) => ResultScreen(
+                              height: double.parse(_heightController.text),
+                              weight: double.parse(_weightController.text),
                             )),
                   );
                 },
-                child: Text('Result'),
+                child: const Text('Result'),
               ),
             ],
           ),
