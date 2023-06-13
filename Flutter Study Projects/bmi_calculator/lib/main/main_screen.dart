@@ -16,6 +16,13 @@ class _MainScreenState extends State<MainScreen> {
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
 
+  // App이 실행될때 호출
+  @override
+  void initState() {
+    super.initState();
+    load();
+  }
+
   // App이 종료될때 호출 (App 종료 시점)
   @override
   void dispose() {
@@ -33,6 +40,22 @@ class _MainScreenState extends State<MainScreen> {
     // Save an double value to 'decimal' key.
     await prefs.setDouble('height', double.parse(_heightController.text));
     await prefs.setDouble('weight', double.parse(_weightController.text));
+  }
+
+  // 데이터 로드 함수 (비동기)
+  Future load() async {
+    // Read data
+    // Obtain shared preferences.
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Try reading data from the 'decimal' key. If it doesn't exist, returns null.
+    final double? height = prefs.getDouble('height');
+    final double? weight = prefs.getDouble('weight');
+    // nullable타입이기 때문에 null check 후 사용
+    if (height != null && weight != null) {
+      _heightController.text = '$height'; // TextFormField에 값을 넣기 위해 String으로
+      _weightController.text = '$weight';
+      print('Height: $height, Weight: $weight');
+    }
   }
 
   @override
