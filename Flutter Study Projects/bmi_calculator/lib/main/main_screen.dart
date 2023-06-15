@@ -34,7 +34,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   // 데이터 저장 함수 (비동기)
-  Future save() async {
+  Future<void> save() async {
     // Write data
     // Obtain shared preferences
     final prefs = await SharedPreferences.getInstance();
@@ -44,7 +44,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   // 데이터 로드 함수 (비동기)
-  Future load() async {
+  Future<void> load() async {
     // Read data
     // Obtain shared preferences.
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
     if (height != null && weight != null) {
       _heightController.text = '$height'; // TextFormField에 값을 넣기 위해 String으로
       _weightController.text = '$weight';
-      print('Height: $height, Weight: $weight');
+      // print('Height: $height, Weight: $weight');  // 저장된 데이터가 제대로 load 되는지 확인하기 위한 logging
     }
   }
 
@@ -63,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BMI Calculator'),
+        title: const Text('BMI Calculator'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
