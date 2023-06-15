@@ -13,6 +13,11 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
   Timer? _timer;
 
   int _time = 0;
+
+  bool _isRunning = false;
+
+  List<String> _lapTimes = [];
+
   /*
   int sec = _time ~/ 100;
   error 발생 (The instance member '_time' can't be accessed in an initializer.
@@ -20,11 +25,8 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
   참조 : https://dart.dev/tools/diagnostic-messages?utm_source=dartdev&utm_medium=redir&utm_id=diagcode&utm_content=implicit_this_reference_in_initializer#implicit_this_reference_in_initializer
    */
   String getSec() => '${_time ~/ 100}'; // ~/ 연산자 : 몫을 구하는
+
   String getMillisecond() => '${_time % 100}'.padLeft(2, '0');
-
-  bool _isRunning = false;
-
-  List<String> lapTimes = [];
 
   void _tapPlayButton() {
     _isRunning = !_isRunning;
@@ -46,6 +48,13 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
 
   void _pause() {
     _timer?.cancel();
+  }
+
+  void _reset() {
+    _isRunning = false;
+    _timer?.cancel();
+    _lapTimes.clear();
+    _time = 0;
   }
 
   @override
@@ -107,7 +116,11 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
             children: [
               FloatingActionButton(
                 backgroundColor: Colors.orange,
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _reset();
+                  });
+                },
                 child: const Icon(Icons.refresh),
               ),
               FloatingActionButton(
