@@ -16,7 +16,7 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
 
   bool _isRunning = false;
 
-  List<String> _lapTimes = [];
+  final List<String> _lapTimes = [];
 
   /*
   int sec = _time ~/ 100;
@@ -57,6 +57,10 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
     _time = 0;
   }
 
+  void _recordLapTime(String time) {
+    _lapTimes.insert(0, '${_lapTimes.length + 1}등 $time');
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
@@ -81,7 +85,7 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
             children: [
               Text(
                 getSec(),
-                style: TextStyle(fontSize: 50),
+                style: const TextStyle(fontSize: 50),
               ),
               Text(
                 getMillisecond(),
@@ -92,22 +96,8 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
             width: 100,
             height: 200,
             child: ListView(
-              children: [
-                Center(child: Text('111')),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-                Text('1'),
-              ],
+              children:
+                  _lapTimes.map((time) => Center(child: Text(time))).toList(),
             ),
           ),
           const Spacer(),
@@ -136,7 +126,11 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
               ),
               FloatingActionButton(
                 backgroundColor: Colors.green,
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _recordLapTime('${getSec()}.${getMillisecond()}');
+                  });
+                },
                 child: const Icon(Icons.add),
               ),
             ],
