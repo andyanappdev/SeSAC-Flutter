@@ -16,17 +16,18 @@ class _MainScreenState extends State<MainScreen> {
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
 
-  // App이 실행될때 호출
+  // Screen Life Cycle Methods
+  // 화면이 실행(진입)될때 호출
   @override
   void initState() {
     super.initState();
     load();
   }
 
-  // App이 종료될때 호출 (App 종료 시점)
+  // 화면이 종료(이동)될때 호출
   @override
   void dispose() {
-    // save(); // 앱이 종료될때 사용자 데이터를 저장 (데이터 저장 함수 콜)
+    // save(); // 화면이 종료될때 사용자 데이터를 저장 (데이터 저장 함수 콜)
     _heightController.dispose();
     _weightController.dispose();
     super.dispose();
@@ -108,7 +109,7 @@ class _MainScreenState extends State<MainScreen> {
                   if (_formKey.currentState?.validate() == false) {
                     return;
                   }
-                  // 앱이 종료될때 사용자 데이터를 저장을 시도하는 것보다
+                  // 화면이 종료(이동)될때 사용자 데이터를 저장을 시도하는 것보다
                   // 확실하게 저장을 완료 할수 있도록 버튼이 눌리면서 다음 화면으로 넘어갈때 데이터 저장을 콜
                   save();
 
