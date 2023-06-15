@@ -12,7 +12,16 @@ class StopWatchScreen extends StatefulWidget {
 class _StopWatchScreenState extends State<StopWatchScreen> {
   Timer? _timer;
 
-  int time = 0;
+  int _time = 0;
+  /*
+  int sec = _time ~/ 100;
+  error 발생 (The instance member '_time' can't be accessed in an initializer.
+  Try replacing the reference to the instance member with a different expression)
+  참조 : https://dart.dev/tools/diagnostic-messages?utm_source=dartdev&utm_medium=redir&utm_id=diagcode&utm_content=implicit_this_reference_in_initializer#implicit_this_reference_in_initializer
+   */
+  String getSec() => '${_time ~/ 100}'; // ~/ 연산자 : 몫을 구하는
+  String getMillisecond() => '${_time % 100}'.padLeft(2, '0');
+
   bool _isRunning = false;
 
   List<String> lapTimes = [];
@@ -27,9 +36,17 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
     }
   }
 
-  void _start() {}
+  void _start() {
+    _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
+      setState(() {
+        _time++;
+      });
+    });
+  }
 
-  void _pause() {}
+  void _pause() {
+    _timer?.cancel();
+  }
 
   @override
   void dispose() {
@@ -39,6 +56,7 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // int sec = _time ~/ 100; // ~/ 연산자 : 몫을 구하는
     return Scaffold(
       appBar: AppBar(
         title: const Text('Stop Watch'),
@@ -48,16 +66,16 @@ class _StopWatchScreenState extends State<StopWatchScreen> {
           const SizedBox(
             height: 30,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                '0',
+                getSec(),
                 style: TextStyle(fontSize: 50),
               ),
               Text(
-                '00',
+                getMillisecond(),
               ),
             ],
           ),
