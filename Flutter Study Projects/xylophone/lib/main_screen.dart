@@ -1,8 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:soundpool/soundpool.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  Soundpool pool = Soundpool.fromOptions(options: SoundpoolOptions.kDefault);
+  List<int> _soundIds = []; // sound id들을 담아 두는 list
+
+  @override
+  void initState() {
+    super.initState();
+    initSoundPool();
+  }
+
+  Future<void> initSoundPool() async {
+    int soundId =
+        await rootBundle.load('sounds/do1.wav').then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    _soundIds.add(soundId);
+
+    soundId = await rootBundle.load('sounds/re.wav').then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    _soundIds.add(soundId);
+    soundId = await rootBundle.load('sounds/mi.wav').then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    _soundIds.add(soundId);
+    soundId = await rootBundle.load('sounds/fa.wav').then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    _soundIds.add(soundId);
+    soundId =
+        await rootBundle.load('sounds/sol.wav').then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    _soundIds.add(soundId);
+    soundId = await rootBundle.load('sounds/la.wav').then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    _soundIds.add(soundId);
+    soundId = await rootBundle.load('sounds/si.wav').then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    _soundIds.add(soundId);
+    soundId =
+        await rootBundle.load('sounds/do2.wav').then((ByteData soundData) {
+      return pool.load(soundData);
+    });
+    _soundIds.add(soundId);
+  }
 
   @override
   Widget build(BuildContext context) {
