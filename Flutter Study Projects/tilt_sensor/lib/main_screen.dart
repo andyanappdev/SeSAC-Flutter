@@ -33,8 +33,8 @@ class MainScreen extends StatelessWidget {
                 print(accelerometerValues);
 
                 return Positioned(
-                  left: centerX,
-                  top: centerY,
+                  left: centerX + event.y * 10,
+                  top: centerY + event.x * 10,
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.green,
