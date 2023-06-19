@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -11,8 +12,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final ImagePicker _imagePicker = ImagePicker();
-  List<XFile>? images;
+  final ImagePicker _imagePicker = ImagePicker(); // imagepicker 생성
+  List<XFile>? images; // 선택한 이미지 담아 두는 list
+
+  int _currentPage = 0;
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
@@ -22,6 +26,22 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> loadImages() async {
     images = await _imagePicker.pickMultiImage();
+
+    if (images != null) {
+      Timer.periodic(const Duration(seconds: 3), (timer) {
+        _currentPage++;
+
+        if (_currentPage > images!.length - 1) {
+          _currentPage = 0;
+        }
+
+        _pageController.animateToPage(
+          _currentPage,
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      });
+    }
 
     setState(() {});
   }
@@ -35,6 +55,7 @@ class _MainScreenState extends State<MainScreen> {
       body: images == null
           ? const Center(child: Text('No data'))
           : PageView(
+              controller: _pageController,
               children: images!.map((image) {
                 return FutureBuilder<Uint8List>(
                     future: image.readAsBytes(),
