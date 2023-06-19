@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -27,7 +29,29 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('My Photo Album')),
+      appBar: AppBar(
+        title: const Text('My Photo Album'),
+      ),
+      body: images == null
+          ? const Center(child: Text('No data'))
+          : PageView(
+              children: images!.map((image) {
+                return FutureBuilder<Uint8List>(
+                    future: image.readAsBytes(),
+                    builder: (context, snapshot) {
+                      final data = snapshot.data;
+
+                      if (data == null ||
+                          snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return Image.memory(
+                        data,
+                        width: double.infinity,
+                      );
+                    });
+              }).toList(),
+            ),
     );
   }
 }
