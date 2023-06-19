@@ -42,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           PopupMenuButton<String>(
             onSelected: (value) {
-              print(value);
+              _webViewController.loadRequest(Uri.parse(value));
             },
             itemBuilder: (context) => [
               const PopupMenuItem<String>(
