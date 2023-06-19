@@ -35,6 +35,31 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Web Browser Test'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              print(value);
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem<String>(
+                value: 'https://www.google.com',
+                child: Text('Google'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'https://www.naver.com',
+                child: Text('Naver'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'https://www.kakao.com',
+                child: Text('Kakao'),
+              ),
+            ],
+          )
+        ],
       ),
       body: WebViewWidget(
         controller: _webViewController,
