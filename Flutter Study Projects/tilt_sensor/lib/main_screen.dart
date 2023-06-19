@@ -15,7 +15,10 @@ class MainScreen extends StatelessWidget {
             left: centerX,
             top: centerY,
             child: Container(
-              color: Colors.red,
+              decoration: const BoxDecoration(
+                color: Colors.green,
+                shape: BoxShape.circle,
+              ),
               width: 100,
               height: 100,
             ),
