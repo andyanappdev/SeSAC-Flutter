@@ -5,11 +5,13 @@ import 'package:intl/intl.dart';
 class TodoItem extends StatelessWidget {
   final Todo todo;
   final Function(Todo) onTap; // callback 함수
+  final Function(Todo) onDelete; // callback 함수
 
   const TodoItem({
     Key? key,
     required this.todo,
     required this.onTap,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,14 @@ class TodoItem extends StatelessWidget {
             .format(DateTime.fromMillisecondsSinceEpoch(todo.dateTime)),
         style: TextStyle(color: todo.isDone ? Colors.grey : Colors.black),
       ),
+      trailing: todo.isDone
+          ? GestureDetector(
+              onTap: () {
+                onDelete(todo);
+              },
+              child: const Icon(Icons.delete_forever),
+            )
+          : null,
     );
   }
 }

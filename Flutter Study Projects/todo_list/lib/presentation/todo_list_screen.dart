@@ -30,7 +30,12 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                   todo: e,
                   onTap: (todo) async {
                     todo.isDone = !todo.isDone;
-                    await todo.save(); // hive 저장
+                    await todo.save(); // hive를 이용하여 데이터 저장
+
+                    setState(() {});
+                  },
+                  onDelete: (todo) async {
+                    await todo.delete(); // hive를 이용하여 데이터 삭제
 
                     setState(() {});
                   },
