@@ -39,6 +39,13 @@ class _MainScreenState extends State<MainScreen> {
     );
 
     setState(() {});
+
+    // 앱 실행 후 계속해서 변경되는 위치정보를 받아와서 map이 이동하도록
+    const LocationSettings locationSettings = LocationSettings();
+    Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((Position position) {
+      _moveCamera(position);
+    });
   }
 
   @override
@@ -53,10 +60,13 @@ class _MainScreenState extends State<MainScreen> {
                 _controller.complete(controller);
               },
             ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToCurrentLocation,
-        label: const Text('Current Location'),
-        icon: const Icon(Icons.directions_walk),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomCenter,
+        child: FloatingActionButton.extended(
+          onPressed: _goToCurrentLocation,
+          label: const Text('Current Location'),
+          icon: const Icon(Icons.directions_walk),
+        ),
       ),
     );
   }
@@ -64,6 +74,16 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> _goToCurrentLocation() async {
     final GoogleMapController controller = await _controller.future;
     final Position position = await Geolocator.getCurrentPosition();
+    final CameraPosition cameraPosition = CameraPosition(
+      target: LatLng(position.latitude, position.longitude),
+      zoom: 17,
+    );
+    await controller
+        .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  }
+
+  Future<void> _moveCamera(Position position) async {
+    final GoogleMapController controller = await _controller.future;
     final CameraPosition cameraPosition = CameraPosition(
       target: LatLng(position.latitude, position.longitude),
       zoom: 17,
