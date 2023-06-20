@@ -15,13 +15,11 @@ class _MainScreenState extends State<MainScreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  // The position of the map "camera", the view point from which the world is shown in the map view.
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
   CameraPosition? _intialCameraPosition;
+
+  int _polylineCounter = 0;
+  Set<Polyline> _polylines = {};
+  LatLng? _prevPosition;
 
   @override
   void initState() {
@@ -44,7 +42,23 @@ class _MainScreenState extends State<MainScreen> {
     const LocationSettings locationSettings = LocationSettings();
     Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position position) {
-      _moveCamera(position);
+      _polylineCounter++;
+      final polylineId = PolylineId('$_polylineCounter');
+      final Polyline polyline = Polyline(
+        polylineId: polylineId,
+        color: Colors.deepOrange,
+        width: 3,
+        points: [
+          _prevPosition ?? _intialCameraPosition!.target,
+          LatLng(position.latitude, position.longitude),
+        ],
+      );
+      setState(() {
+        _polylines.add(polyline);
+        _prevPosition = LatLng(position.latitude, position.longitude);
+      });
+
+      // _moveCamera(position); // 카메라 이동
     });
   }
 
@@ -59,6 +73,7 @@ class _MainScreenState extends State<MainScreen> {
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
+              polylines: _polylines,
             ),
       floatingActionButton: Align(
         alignment: Alignment.bottomCenter,
