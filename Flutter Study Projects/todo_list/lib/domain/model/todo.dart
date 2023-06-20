@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 part 'todo.g.dart';
 
 @HiveType(typeId: 0) // hive를 이용하여 저장할 객체에 annotation 달기
@@ -13,5 +14,12 @@ class Todo extends HiveObject {
   @HiveField(2)
   int dateTime;
 
-  Todo({required this.title, required this.dateTime});
+  @HiveField(3)
+  bool isDone;
+
+  Todo({
+    required this.title,
+    required this.dateTime,
+    this.isDone = false,
+  });
 }

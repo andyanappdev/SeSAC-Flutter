@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/presentation/components/todo_item.dart';
 import 'package:todo_list/presentation/create_screen.dart';
 import '../main.dart';
 
@@ -24,12 +25,18 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
         title: const Text('To Do List'),
       ),
       body: ListView(
-          children: todos.values
-              .map((todo) => ListTile(
-                    title: Text(todo.title),
-                    subtitle: Text('${todo.dateTime}'),
-                  ))
-              .toList()),
+        children: todos.values
+            .map((e) => TodoItem(
+                  todo: e,
+                  onTap: (todo) async {
+                    todo.isDone = !todo.isDone;
+                    await todo.save(); // hive 저장
+
+                    setState(() {});
+                  },
+                ))
+            .toList(),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // awiat 를 사용하여 CreateScreen으로 이동하여 todo를 입력하고 돌아오는 것을 기다리게 한다.
