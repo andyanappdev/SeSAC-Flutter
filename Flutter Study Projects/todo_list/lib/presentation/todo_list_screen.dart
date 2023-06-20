@@ -7,7 +7,23 @@ class ToDoListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ToDo List'),
+        title: const Text('To Do List'),
+      ),
+      body: ListView(
+        children: const [
+          ListTile(
+            title: Text('title 1'),
+            subtitle: Text('subtitle 1'),
+          ),
+          ListTile(
+            title: Text('title 2'),
+            subtitle: Text('subtitle 2'),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }
