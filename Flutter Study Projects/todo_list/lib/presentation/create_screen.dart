@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/domain/model/todo.dart';
 
-class CreateScreen extends StatelessWidget {
+import '../main.dart';
+
+class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key});
+
+  @override
+  State<CreateScreen> createState() => _CreateScreenState();
+}
+
+class _CreateScreenState extends State<CreateScreen> {
+  final TextEditingController _textContorller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +20,15 @@ class CreateScreen extends StatelessWidget {
         title: const Text('Make a ToDo'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await todos.add(Todo(
+                title: _textContorller.text,
+                dateTime: DateTime.now().microsecondsSinceEpoch,
+              ));
+              if (mounted) {
+                Navigator.pop(context);
+              }
+            },
             icon: const Icon(Icons.done),
           ),
         ],
@@ -19,11 +36,12 @@ class CreateScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
+          controller: _textContorller,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
-            hintText: 'Type your ToDo',
+            hintText: 'Type Your ToDo',
             hintStyle: TextStyle(color: Colors.grey[800]),
             filled: true,
             fillColor: Colors.white70,
