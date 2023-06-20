@@ -10,7 +10,7 @@ late final Box<Todo> todos;
 void main() async {
   await Hive.initFlutter(); // hive 초기화
   Hive.registerAdapter(TodoAdapter());
-  Box<Todo> todos = await Hive.openBox<Todo>('todolist.db');
+  todos = await Hive.openBox<Todo>('todolist.db');
   runApp(const MyApp());
 }
 
