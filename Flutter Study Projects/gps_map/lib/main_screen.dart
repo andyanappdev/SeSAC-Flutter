@@ -50,16 +50,22 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
+        onPressed: _goToCurrentLocation,
+        label: const Text('Current Location'),
+        icon: const Icon(Icons.directions_walk),
       ),
     );
   }
 
-  Future<void> _goToTheLake() async {
+  Future<void> _goToCurrentLocation() async {
     final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+    final Position position = await Geolocator.getCurrentPosition();
+    final CameraPosition cameraPosition = CameraPosition(
+      target: LatLng(position.latitude, position.longitude),
+      zoom: 17,
+    );
+    await controller
+        .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
 
   Future<Position> _determinePosition() async {
