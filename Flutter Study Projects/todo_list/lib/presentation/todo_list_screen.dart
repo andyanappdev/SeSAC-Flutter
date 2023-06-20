@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/presentation/create_screen.dart';
 
 class ToDoListScreen extends StatelessWidget {
   const ToDoListScreen({super.key});
@@ -22,7 +23,12 @@ class ToDoListScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateScreen()),
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );
