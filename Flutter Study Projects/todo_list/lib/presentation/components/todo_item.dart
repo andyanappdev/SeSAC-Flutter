@@ -26,7 +26,8 @@ class TodoItem extends StatelessWidget {
         style: TextStyle(color: todo.isDone ? Colors.grey : Colors.black),
       ),
       subtitle: Text(
-        '${todo.dateTime}',
+        DateFormat.yMMMd()
+            .format(DateTime.fromMillisecondsSinceEpoch(todo.dateTime)),
         style: TextStyle(color: todo.isDone ? Colors.grey : Colors.black),
       ),
     );
