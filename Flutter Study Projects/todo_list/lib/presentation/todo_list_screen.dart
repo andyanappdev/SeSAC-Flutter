@@ -31,11 +31,14 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                   ))
               .toList()),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          // awiat 를 사용하여 CreateScreen으로 이동하여 todo를 입력하고 돌아오는 것을 기다리게 한다.
+          await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => CreateScreen()),
           );
+
+          setState(() {}); // 화면 갱신
         },
         child: const Icon(Icons.add),
       ),
