@@ -21,11 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     zoom: 14.4746,
   );
 
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  CameraPosition? _intialCameraPosition;
 
   @override
   void initState() {
@@ -36,19 +32,27 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> init() async {
     final position = await _determinePosition();
-    print(position);
+
+    _intialCameraPosition = CameraPosition(
+      target: LatLng(position.latitude, position.longitude),
+      zoom: 18,
+    );
+
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
+      body: _intialCameraPosition == null
+          ? const Center(child: CircularProgressIndicator())
+          : GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: _intialCameraPosition!,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _goToCurrentLocation,
         label: const Text('Current Location'),
