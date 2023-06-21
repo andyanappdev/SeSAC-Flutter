@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/usr/local/Caskroom/flutter/3.10.5/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/doyoung/Desktop/Share/Flutter Projects/Study/SeSacFlutter/Flutter Clone Projects/Colne UI Projects/youtube_clone_ui"
+export "FLUTTER_APPLICATION_PATH=/Users/doyoung/Desktop/Share/Flutter Projects/Study/SeSacFlutter/Flutter Projects/Flutter Clone Projects/Colne UI Projects/youtube_clone_ui"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"
