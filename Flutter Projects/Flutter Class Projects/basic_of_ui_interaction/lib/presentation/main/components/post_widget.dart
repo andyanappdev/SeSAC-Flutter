@@ -1,15 +1,18 @@
+import 'package:basic_of_ui_interaction/domain/model/post.dart';
 import 'package:basic_of_ui_interaction/presentation/main/components/custom_button.dart';
 import 'package:flutter/material.dart';
 
-class PostWidget extends StatefulWidget {
-  const PostWidget({super.key});
+class PostWidget extends StatelessWidget {
+  final Post post;
+  // final int favoriteCount;
+  final Function(Post post) onFavoriteTapped; // callback 함수
 
-  @override
-  State<PostWidget> createState() => _PostWidgetState();
-}
-
-class _PostWidgetState extends State<PostWidget> {
-  bool _isFavorite = false;
+  const PostWidget({
+    super.key,
+    required this.post,
+    // required this.favoriteCount,
+    required this.onFavoriteTapped,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   Widget _topImage() {
     return Image.network(
-      'https://file.mk.co.kr/meet/neds/2023/02/image_readtop_2023_117777_16759917015347929.jpg',
+      post.imageUrl,
       height: 300,
       width: double.infinity,
       fit: BoxFit.cover,
@@ -47,20 +50,20 @@ class _PostWidgetState extends State<PostWidget> {
   Widget _titleSection() {
     return Row(
       children: [
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '아이유는 아이가 아니에요',
-                style: TextStyle(
+                post.title,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                '아이유 30살 넘었다!',
-                style: TextStyle(
+                post.subTitle,
+                style: const TextStyle(
                   fontSize: 15,
                   color: Colors.grey,
                 ),
@@ -70,17 +73,15 @@ class _PostWidgetState extends State<PostWidget> {
         ),
         GestureDetector(
           onTap: () {
-            setState(() {
-              _isFavorite = !_isFavorite;
-            });
+            onFavoriteTapped(post); // callback 전달
           },
           child: Row(
             children: [
               Icon(
-                _isFavorite ? Icons.star : Icons.star_border,
+                post.isFavorite ? Icons.star : Icons.star_border,
                 color: Colors.red,
               ),
-              const Text('41'),
+              Text('${post.favoriteCount}'),
             ],
           ),
         )
@@ -110,15 +111,12 @@ class _PostWidgetState extends State<PostWidget> {
 
   Widget _bottomText() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: const Text(
-        'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
-        'Alps. Situated 1,578 meters above sea level, it is one of the '
-        'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
-        'half-hour walk through pastures and pine forest, leads you to the '
-        'lake, which warms to 20 degrees Celsius in the summer. Activities '
-        'enjoyed here include rowing, and riding the summer toboggan run.',
+      padding: const EdgeInsets.fromLTRB(24.0, 0.0, 24.0, 24.0),
+      child: Text(
+        post.content,
         softWrap: true,
+        maxLines: 5,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

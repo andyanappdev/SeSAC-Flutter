@@ -1,5 +1,5 @@
-import 'package:basic_of_ui_interaction/presentation/main/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:basic_of_ui_interaction/presentation/main/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
