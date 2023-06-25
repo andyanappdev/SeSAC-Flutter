@@ -12,7 +12,7 @@ class PostApi {
 
   // FutureBuilder 연습문제 2
   Future<List<Post>> getPosts() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 3));
 
     final response =
         await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
