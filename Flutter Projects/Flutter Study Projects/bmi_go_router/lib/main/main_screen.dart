@@ -1,5 +1,5 @@
-import 'package:bmi_go_router/result/result_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
@@ -12,6 +12,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   // Form의 상태를 담아두는 key
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   // TextFormField에 입력된 값을 가져올 controller
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
@@ -113,14 +114,12 @@ class _MainScreenState extends State<MainScreen> {
                   // 확실하게 저장을 완료 할수 있도록 버튼이 눌리면서 다음 화면으로 넘어갈때 데이터 저장을 콜
                   save();
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ResultScreen(
-                              height: double.parse(_heightController.text),
-                              weight: double.parse(_weightController.text),
-                            )),
-                  );
+                  // queryParameters 로 Map 데이터 전달
+                  // Uri로 설정
+                  context.push(Uri(path: '/main/result', queryParameters: {
+                    'height': _heightController.text,
+                    'weight': _weightController.text,
+                  }).toString());
                 },
                 child: const Text('Result'),
               ),
