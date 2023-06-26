@@ -60,19 +60,28 @@ class AccountScreen extends StatelessWidget {
             const Column(
               children: [
                 Text('3', style: TextStyle(fontSize: 18)),
-                Text('게시물', style: TextStyle(fontSize: 18)),
+                Text(
+                  '게시물',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
             const Column(
               children: [
                 Text('0', style: TextStyle(fontSize: 18)),
-                Text('팔로우', style: TextStyle(fontSize: 18)),
+                Text(
+                  '팔로우',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
             const Column(
               children: [
                 Text('0', style: TextStyle(fontSize: 18)),
-                Text('팔로잉', style: TextStyle(fontSize: 18)),
+                Text(
+                  '팔로잉',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ],
