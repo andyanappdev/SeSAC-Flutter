@@ -1,7 +1,18 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class CreateScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:instagram_clone/domain/model/create_model.dart';
+
+class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key});
+
+  @override
+  State<CreateScreen> createState() => _CreateScreenState();
+}
+
+class _CreateScreenState extends State<CreateScreen> {
+  final CreateModel model = CreateModel();
+  File? _image;
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +42,21 @@ class CreateScreen extends StatelessWidget {
                   fillColor: Colors.white70,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  _image = await model.getImage();
+                  // 화면 갱신
+                  setState(() {});
+                },
                 child: const Text('Select Image'),
               ),
-              Image.network(
-                'https://image.xportsnews.com/contents/images/upload/article/2021/1205/mb_1638644603600645.jpg',
-                // width: 300,
-              ),
+              const SizedBox(height: 10),
+              if (_image != null)
+                Image.file(
+                  _image!,
+                  // width: 300,
+                ),
             ],
           ),
         ),
