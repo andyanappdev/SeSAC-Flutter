@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/domain/model/post.dart';
 
@@ -16,7 +17,17 @@ class CreateModel {
     return File(image.path);
   }
 
-  Future<void> uploadPost(String title, File imageUrl) async {
+  Future<void> uploadPost(String title, File imageFile) async {
+    // 이미지 업로드
+    final storageRef = FirebaseStorage.instance.ref();
+    final imageRef = storageRef
+        .child('postImages/${DateTime.now().millisecondsSinceEpoch}.;png');
+
+    //업로드된 이미지의 url 주소 가져오기
+    await imageRef.putFile(imageFile);
+    final downloadUrl = await imageRef.getDownloadURL();
+
+    // post 업로드
     final postsRef =
         FirebaseFirestore.instance.collection('posts').withConverter<Post>(
               fromFirestore: (snapshot, _) => Post.fromJson(snapshot.data()!),
@@ -29,8 +40,7 @@ class CreateModel {
       id: newPostRef.id,
       userId: FirebaseAuth.instance.currentUser?.uid ?? '',
       title: title,
-      imageUrl:
-          'https://cdn.goodkyung.com/news/photo/202302/200063_162949_1522.jpg',
+      imageUrl: downloadUrl,
     ));
   }
 }
