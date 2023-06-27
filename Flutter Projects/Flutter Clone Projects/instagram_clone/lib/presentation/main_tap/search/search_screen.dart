@@ -57,9 +57,12 @@ class SearchScreen extends StatelessWidget {
                                   DetailPostScreen(post: post)),
                         );
                       },
-                      child: Image.network(
-                        post.imageUrl,
-                        fit: BoxFit.cover,
+                      child: Hero(
+                        tag: post.id,
+                        child: Image.network(
+                          post.imageUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     );
                   });

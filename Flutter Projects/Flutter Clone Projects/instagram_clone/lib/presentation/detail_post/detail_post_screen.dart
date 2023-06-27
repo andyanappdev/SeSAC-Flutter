@@ -35,11 +35,14 @@ class DetailPostScreen extends StatelessWidget {
               ],
             ),
           ),
-          Image.network(
-            post.imageUrl,
-            width: 500,
-            height: 500,
-            fit: BoxFit.cover,
+          Hero(
+            tag: post.id,
+            child: Image.network(
+              post.imageUrl,
+              width: 500,
+              height: 500,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
