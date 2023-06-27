@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/domain/model/post.dart';
 import 'package:instagram_clone/presentation/create/create_screen.dart';
+import 'package:instagram_clone/presentation/detail_post/detail_post_screen.dart';
 import 'package:instagram_clone/presentation/main_tap/search/search_model.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -47,9 +48,19 @@ class SearchScreen extends StatelessWidget {
                   ), // GridView의 열 갯수 설정
                   itemBuilder: (BuildContext context, int index) {
                     final post = posts[index];
-                    return Image.network(
-                      post.imageUrl,
-                      fit: BoxFit.cover,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailPostScreen(post: post)),
+                        );
+                      },
+                      child: Image.network(
+                        post.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
                     );
                   });
             }),
