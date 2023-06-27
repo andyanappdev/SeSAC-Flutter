@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AccountModel {
-  Future<void> logout() async {
-    await FirebaseAuth.instance.signOut();
+class HomeModel {
+  String getEmail() {
+    return FirebaseAuth.instance.currentUser?.email ?? 'No email';
   }
 
   String getNickName() {

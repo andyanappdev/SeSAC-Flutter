@@ -28,12 +28,12 @@ class AccountScreen extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 80,
                       width: 80,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://newsimg.sedaily.com/2023/05/10/29PIXQDV1Q_1.jpg'),
+                        backgroundImage:
+                            NetworkImage(model.getProfileImageUrl()),
                       ),
                     ),
                     Container(
@@ -52,9 +52,9 @@ class AccountScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'IU',
-                  style: TextStyle(
+                Text(
+                  model.getNickName(),
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/domain/model/home_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final model = HomeModel();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Instagram Clone'),
@@ -27,22 +29,22 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 80,
                       width: 80,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://newsimg.sedaily.com/2023/05/10/29PIXQDV1Q_1.jpg'),
+                        backgroundImage:
+                            NetworkImage(model.getProfileImageUrl()),
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'test@gmail.com',
-                      style: TextStyle(
+                    Text(
+                      model.getEmail(),
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text('닉네임'),
+                    Text(model.getNickName()),
                     const SizedBox(height: 8),
                     Row(
                       mainAxisSize: MainAxisSize.min,
