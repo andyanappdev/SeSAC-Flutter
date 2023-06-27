@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,6 +43,16 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyADsKzP4C5YPM0k9gesMZDkQq_3A0c_jAo',
+    appId: '1:946084676492:web:8b9f4aa121b3ad28df8ca9',
+    messagingSenderId: '946084676492',
+    projectId: 'instagram-clone-54971',
+    authDomain: 'instagram-clone-54971.firebaseapp.com',
+    storageBucket: 'instagram-clone-54971.appspot.com',
+    measurementId: 'G-ZJ392KXR4D',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDA6AUK-eqxyFGHpmEvpvdDmKPSyILMMDk',
     appId: '1:946084676492:android:f2322cf436ce3725df8ca9',
@@ -65,5 +69,15 @@ class DefaultFirebaseOptions {
     storageBucket: 'instagram-clone-54971.appspot.com',
     iosClientId: '946084676492-gorh1hgjjkcjr8c1g5bbtq6l1ave0b3n.apps.googleusercontent.com',
     iosBundleId: 'com.AndyAn.instagramClone',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyA9DzJKrpyTF6uoDZ6G8xabsIENHDji4g4',
+    appId: '1:946084676492:ios:54bcffcfb4de55c1df8ca9',
+    messagingSenderId: '946084676492',
+    projectId: 'instagram-clone-54971',
+    storageBucket: 'instagram-clone-54971.appspot.com',
+    iosClientId: '946084676492-rbvugot2gmhmtb26ucrlov4p0akth78l.apps.googleusercontent.com',
+    iosBundleId: 'com.AndyAn.instagramClone.RunnerTests',
   );
 }
