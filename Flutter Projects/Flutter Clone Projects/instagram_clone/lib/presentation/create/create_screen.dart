@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/domain/model/create_model.dart';
+import 'package:instagram_clone/presentation/create/create_model.dart';
 
 class CreateScreen extends StatefulWidget {
   const CreateScreen({super.key});
@@ -14,6 +14,8 @@ class _CreateScreenState extends State<CreateScreen> {
   final CreateModel model = CreateModel();
 
   File? _image;
+
+  bool isLoading = false;
 
   final TextEditingController _titleTextController = TextEditingController();
 
@@ -30,13 +32,25 @@ class _CreateScreenState extends State<CreateScreen> {
         title: const Text('Create New Post'),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               // 이미지 피커 실행
               if (_image != null && _titleTextController.text.isNotEmpty) {
-                model.uploadPost(
+                setState(() {
+                  isLoading = true;
+                });
+
+                await model.uploadPost(
                   _titleTextController.text,
                   _image!,
                 );
+
+                setState(() {
+                  isLoading = false;
+                });
+
+                if (mounted) {
+                  Navigator.pop(context);
+                }
               }
             },
             icon: const Icon(Icons.send),
@@ -61,6 +75,7 @@ class _CreateScreenState extends State<CreateScreen> {
                 ),
               ),
               const SizedBox(height: 10),
+              if (isLoading) const CircularProgressIndicator(),
               ElevatedButton(
                 onPressed: () async {
                   _image = await model.getImage();

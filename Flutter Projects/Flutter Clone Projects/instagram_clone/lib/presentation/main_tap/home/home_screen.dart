@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/domain/model/home_model.dart';
+import 'package:instagram_clone/presentation/main_tap/home/home_model.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

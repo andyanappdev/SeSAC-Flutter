@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/domain/model/account_model.dart';
+import 'package:instagram_clone/presentation/main_tap/account/account_model.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
