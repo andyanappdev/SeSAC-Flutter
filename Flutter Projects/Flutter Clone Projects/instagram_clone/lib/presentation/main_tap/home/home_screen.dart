@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/presentation/main_tap/home/home_model.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final model = HomeModel();
+
+  @override
   Widget build(BuildContext context) {
-    final model = HomeModel();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Instagram Clone'),
@@ -32,9 +38,17 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(
                       height: 80,
                       width: 80,
-                      child: CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(model.getProfileImageUrl()),
+                      child: GestureDetector(
+                        // 이미지 피커를 이용하여 아바타 사진 변경
+                        onTap: () async {
+                          await model.updateProfileImage();
+
+                          setState(() {}); // 화면 갱신
+                        },
+                        child: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(model.getProfileImageUrl()),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 8),
