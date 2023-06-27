@@ -12,7 +12,16 @@ class CreateScreen extends StatefulWidget {
 
 class _CreateScreenState extends State<CreateScreen> {
   final CreateModel model = CreateModel();
+
   File? _image;
+
+  final TextEditingController _titleTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +30,15 @@ class _CreateScreenState extends State<CreateScreen> {
         title: const Text('Create New Post'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // 이미지 피커 실행
+              if (_image != null && _titleTextController.text.isNotEmpty) {
+                model.uploadPost(
+                  _titleTextController.text,
+                  _image!,
+                );
+              }
+            },
             icon: const Icon(Icons.send),
           ),
         ],
@@ -32,6 +49,7 @@ class _CreateScreenState extends State<CreateScreen> {
           child: Column(
             children: [
               TextField(
+                controller: _titleTextController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16.0),
