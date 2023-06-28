@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_browser/presentation/main/main_view_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class MainScreen extends StatefulWidget {
@@ -9,47 +10,51 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  /// Instantiating a View Model
+  final viewModel = MainViewModel();
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Web Browser Test'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add),
+    /// SafeArea 적용 생활화 하기
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Web Browser Test'),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add),
+            ),
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                // View Model에서 가져오기
+                viewModel.controller.loadRequest(Uri.parse(value));
+              },
+              itemBuilder: (context) {
+                // View Model에서 Map 데이터를 mapping 해서 PopupMenuItem 을 설정
+                return viewModel.popupMenuItems.entries.map((item) {
+                  return PopupMenuItem<String>(
+                    value: item.value,
+                    child: Text(item.key),
+                  );
+                }).toList();
+              },
+            )
+          ],
+        ),
+        body: WillPopScope(
+          onWillPop: () async {
+            // View Model에서 가져오기
+            if (await viewModel.controller.canGoBack()) {
+              await viewModel.controller.goBack();
+              return false;
+            }
+            return true;
+          },
+          child: WebViewWidget(
+            // View Model에서 가져오기
+            controller: viewModel.controller,
           ),
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              _webViewController.loadRequest(Uri.parse(value));
-            },
-            itemBuilder: (context) => [
-              const PopupMenuItem<String>(
-                value: 'https://www.google.com',
-                child: Text('Google'),
-              ),
-              const PopupMenuItem<String>(
-                value: 'https://www.naver.com',
-                child: Text('Naver'),
-              ),
-              const PopupMenuItem<String>(
-                value: 'https://www.kakao.com',
-                child: Text('Kakao'),
-              ),
-            ],
-          )
-        ],
-      ),
-      body: WillPopScope(
-        onWillPop: () async {
-          if (await _webViewController.canGoBack()) {
-            await _webViewController.goBack();
-            return false;
-          }
-          return true;
-        },
-        child: WebViewWidget(
-          controller: _webViewController,
         ),
       ),
     );
