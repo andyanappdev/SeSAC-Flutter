@@ -12,7 +12,6 @@ class MainViewModel {
   // 수정은 메서드를 통해서만 하도록 구현
   void changeColor(Color color) {
     _color = color;
-    _buttonText = 'succeed to change color';
   }
 
   // login 기능이 필요하다면 아래와 같은 메서드를 구현하여 제공
