@@ -13,6 +13,13 @@ class _MainScreenState extends State<MainScreen> {
   /// Instantiating a View Model
   final viewModel = MainViewModel();
 
+  /// WebViewController dose not have dispose method
+  // @override
+  // void dispose() {
+  //   viewModel.controller.dispose();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
     /// SafeArea 적용 생활화 하기
