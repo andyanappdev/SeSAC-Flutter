@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_practice/core/router.dart';
-import 'package:provider_practice/presentation/main/main_screen.dart';
 import 'package:provider_practice/presentation/main/main_view_model.dart';
 
 void main() {
