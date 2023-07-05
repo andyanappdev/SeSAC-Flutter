@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_practice/presentation/main/main_view_model.dart';
 
@@ -31,6 +32,13 @@ class _MainScreenState extends State<MainScreen> {
               context.read<MainViewModel>().increment();
             },
             child: const Text('+'),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            onPressed: () {
+              context.push('/second');
+            },
+            child: const Text('>>>'),
           ),
         ],
       ),

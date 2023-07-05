@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider_practice/presentation/main/main_screen.dart';
+import 'package:provider_practice/presentation/second/second_screen.dart';
 
 // GoRouter configuration
 final router = GoRouter(
@@ -9,9 +10,9 @@ final router = GoRouter(
       path: '/main',
       builder: (context, state) => const MainScreen(),
     ),
-    // GoRoute(
-    //   path: '/second',
-    //   builder: (context, state) => SecondScreen(),
-    // ),
+    GoRoute(
+      path: '/second',
+      builder: (context, state) => const SecondScreen(),
+    ),
   ],
 );
