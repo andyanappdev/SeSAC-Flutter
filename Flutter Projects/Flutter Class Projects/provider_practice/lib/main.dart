@@ -4,6 +4,8 @@ import 'package:provider_practice/core/router.dart';
 import 'package:provider_practice/presentation/main/main_view_model.dart';
 
 void main() {
+  runApp(const MyApp());
+  // App 최상단에 Provider 설정시
   runApp(
     MultiProvider(
       providers: [

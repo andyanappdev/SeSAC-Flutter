@@ -11,6 +11,14 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Future.microtask(() {
+  //     context.read<MainViewModel>();
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MainViewModel>();
