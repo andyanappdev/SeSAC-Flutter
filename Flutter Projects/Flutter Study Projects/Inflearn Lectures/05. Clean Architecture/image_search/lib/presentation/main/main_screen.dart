@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:image_search/data/api.dart';
+import 'package:image_search/data/photo_provider.dart';
 import 'package:image_search/domain/model/photo.dart';
 import 'package:image_search/presentation/components/photo_widget.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -11,7 +12,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final api = PixabayApi();
   final TextEditingController _controller = TextEditingController();
 
   List<Photo> _photos = [];
@@ -24,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final photoProvider = PhotoProvider.of(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -36,14 +37,14 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: Column(
         children: [
-          topSection(),
+          topSection(photoProvider),
           bottomSection(),
         ],
       ),
     );
   }
 
-  Padding topSection() {
+  Padding topSection(PhotoProvider photoProvider) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
@@ -55,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
           suffixIcon: IconButton(
             onPressed: () async {
               // 클릭시 작동 코드 작성
-              final photos = await api.fetch(_controller.text);
+              final photos = await photoProvider.api.fetch(_controller.text);
               setState(() {
                 _photos = photos;
               });

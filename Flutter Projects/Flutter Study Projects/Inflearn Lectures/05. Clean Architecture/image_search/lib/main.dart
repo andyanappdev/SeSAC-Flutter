@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_search/data/api.dart';
+import 'package:image_search/data/photo_provider.dart';
 import 'package:image_search/presentation/main/main_screen.dart';
 
 void main() {
@@ -17,7 +19,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainScreen(),
+      home: PhotoProvider(
+        api: PixabayApi(),
+        child: const MainScreen(),
+      ),
     );
   }
 }
