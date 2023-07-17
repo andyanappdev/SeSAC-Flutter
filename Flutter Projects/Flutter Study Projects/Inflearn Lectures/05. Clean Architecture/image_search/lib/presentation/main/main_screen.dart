@@ -14,8 +14,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final TextEditingController _controller = TextEditingController();
 
-  List<Photo> _photos = [];
-
   @override
   void dispose() {
     _controller.dispose();
@@ -38,7 +36,7 @@ class _MainScreenState extends State<MainScreen> {
       body: Column(
         children: [
           topSection(photoProvider),
-          bottomSection(),
+          bottomSection(photoProvider),
         ],
       ),
     );
@@ -56,10 +54,7 @@ class _MainScreenState extends State<MainScreen> {
           suffixIcon: IconButton(
             onPressed: () async {
               // 클릭시 작동 코드 작성
-              final photos = await photoProvider.api.fetch(_controller.text);
-              setState(() {
-                _photos = photos;
-              });
+              photoProvider.fetch(_controller.text);
             },
             icon: const Icon(Icons.search),
           ),
@@ -68,23 +63,33 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Expanded bottomSection() {
-    return Expanded(
-      child: GridView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: _photos.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-        ),
-        itemBuilder: (context, index) {
-          final photo = _photos[index];
-          return PhotoWidget(
-            photo: photo,
+  StreamBuilder<List<Photo>> bottomSection(PhotoProvider photoProvider) {
+    return StreamBuilder<List<Photo>>(
+        stream: photoProvider.photoStream,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
+          }
+
+          final photos = snapshot.data!;
+
+          return Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: photos.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemBuilder: (context, index) {
+                final photo = photos[index];
+                return PhotoWidget(
+                  photo: photo,
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
+        });
   }
 }
