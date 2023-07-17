@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:image_search/presentation/main/components/photo_widget.dart';
+import 'package:image_search/presentation/main/main_ui_event.dart';
 import 'package:image_search/presentation/main/main_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -12,9 +15,30 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final TextEditingController _controller = TextEditingController();
+  // viewModel.eventStream.listen 은 StreamSubscription을 리턴한다
+  // 계속해서 listen을 하지 못하도록 처리하기 위해 dispose() 함수 내에서 cancel 해준다
+  StreamSubscription? _subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    // 약간의 딜레이를 주는 microtask
+    Future.microtask(() {
+      final viewModel = context.read<MainViewModel>();
+      viewModel.eventStream.listen((event) {
+        switch (event) {
+          case ShowSnackBar(:final data):
+            // snackbar를 띄워주는 코드 작성
+            final snackBar = SnackBar(content: Text(data));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      });
+    });
+  }
 
   @override
   void dispose() {
+    _subscription?.cancel();
     _controller.dispose();
     super.dispose();
   }
