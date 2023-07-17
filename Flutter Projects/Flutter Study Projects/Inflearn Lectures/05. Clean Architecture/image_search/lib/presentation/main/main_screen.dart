@@ -3,6 +3,7 @@ import 'package:image_search/data/photo_provider.dart';
 import 'package:image_search/domain/model/photo.dart';
 import 'package:image_search/presentation/components/photo_widget.dart';
 import 'package:image_search/presentation/main/main_view_model.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -22,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = PhotoProvider.of(context).viewModel;
+    final viewModel = context.watch<MainViewModel>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
