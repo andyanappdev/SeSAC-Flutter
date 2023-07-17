@@ -13,16 +13,7 @@ void main() {
 
     final List<Photo> result = mockJson.map((e) => Photo.fromJson(e)).toList();
 
-    expect(
-      viewModel.photoStream,
-      emitsInOrder([
-        // 초기에 StreamController에 아무것도 담겨 있지 않기 때문에 ..add([]) 하여 빈 리스트를 담아둔것을 확인
-        equals([]),
-        // Stream을 통해서 mockJson.map((e) => Photo.fromJson(e)).toList() 데이터가 들어올것이라는 것을 테스트
-        equals(result),
-        equals(result),
-      ]),
-    );
+    expect(viewModel.photos, result);
   });
 }
 

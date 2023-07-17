@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:image_search/data/photo_provider.dart';
 import 'package:image_search/domain/model/photo.dart';
@@ -64,33 +66,27 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  StreamBuilder<List<Photo>> bottomSection(MainViewModel viewModel) {
-    return StreamBuilder<List<Photo>>(
-        stream: viewModel.photoStream,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const CircularProgressIndicator();
-          }
-
-          final photos = snapshot.data!;
-
-          return Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: photos.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-              ),
-              itemBuilder: (context, index) {
-                final photo = photos[index];
-                return PhotoWidget(
-                  photo: photo,
-                );
-              },
+  Consumer<MainViewModel> bottomSection(MainViewModel viewModel) {
+    return Consumer<MainViewModel>(
+      builder: (_, viewModel, child) {
+        return Expanded(
+          child: GridView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: viewModel.photos.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
             ),
-          );
-        });
+            itemBuilder: (context, index) {
+              final photo = viewModel.photos[index];
+              return PhotoWidget(
+                photo: photo,
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }
