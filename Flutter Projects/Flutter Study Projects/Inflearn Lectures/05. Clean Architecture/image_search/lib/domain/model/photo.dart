@@ -102,4 +102,17 @@ class Photo {
         "user": user,
         "userImageURL": userImageUrl,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Photo && runtimeType == other.runtimeType && id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'Photo{id: $id}';
+  }
 }
