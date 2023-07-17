@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:image_search/data/pixabay_api.dart';
 import 'package:image_search/data/repository/photo_api_repository.dart';
 import 'package:image_search/domain/model/photo.dart';
 import 'package:image_search/presentation/main/main_view_model.dart';
