@@ -65,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Padding topSection(MainViewModel viewModel) {
+  Widget topSection(MainViewModel viewModel) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
@@ -86,23 +86,25 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Expanded bottomSection(MainViewModel viewModel) {
-    return Expanded(
-      child: GridView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: viewModel.photos.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-        ),
-        itemBuilder: (context, index) {
-          final photo = viewModel.photos[index];
-          return PhotoWidget(
-            photo: photo,
+  Widget bottomSection(MainViewModel viewModel) {
+    return viewModel.isLoading
+        ? const CircularProgressIndicator()
+        : Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16.0),
+              itemCount: viewModel.photos.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemBuilder: (context, index) {
+                final photo = viewModel.photos[index];
+                return PhotoWidget(
+                  photo: photo,
+                );
+              },
+            ),
           );
-        },
-      ),
-    );
   }
 }

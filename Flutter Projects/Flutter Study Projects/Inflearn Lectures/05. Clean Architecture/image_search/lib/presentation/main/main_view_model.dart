@@ -18,9 +18,15 @@ class MainViewModel with ChangeNotifier {
       StreamController<MainUiEvent>();
   Stream<MainUiEvent> get eventStream => _eventController.stream;
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading; // getter
+
   MainViewModel(this.repository);
 
   Future<void> fetch(String query) async {
+    _isLoading = true;
+    notifyListeners();
+
     final Result<List<Photo>> result = await repository.fetch(query);
 
     switch (result) {
@@ -31,5 +37,8 @@ class MainViewModel with ChangeNotifier {
         // error 처리 코드
         _eventController.add(MainUiEvent.showSnackBar(e));
     }
+
+    _isLoading = false;
+    notifyListeners();
   }
 }
