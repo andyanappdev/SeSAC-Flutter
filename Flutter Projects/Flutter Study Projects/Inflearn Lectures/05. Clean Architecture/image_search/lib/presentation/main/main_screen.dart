@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:image_search/presentation/main/components/photo_widget.dart';
+import 'package:image_search/presentation/main/main_state.dart';
 import 'package:image_search/presentation/main/main_ui_event.dart';
 import 'package:image_search/presentation/main/main_view_model.dart';
 import 'package:provider/provider.dart';
@@ -46,6 +47,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MainViewModel>();
+    final state = viewModel.state;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -58,14 +60,14 @@ class _MainScreenState extends State<MainScreen> {
       ),
       body: Column(
         children: [
-          topSection(viewModel),
-          bottomSection(viewModel),
+          topSection(viewModel, state),
+          bottomSection(viewModel, state),
         ],
       ),
     );
   }
 
-  Widget topSection(MainViewModel viewModel) {
+  Widget topSection(MainViewModel viewModel, MainState state) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
@@ -86,20 +88,20 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget bottomSection(MainViewModel viewModel) {
-    return viewModel.isLoading
+  Widget bottomSection(MainViewModel viewModel, MainState state) {
+    return state.isLoading
         ? const CircularProgressIndicator()
         : Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(16.0),
-              itemCount: viewModel.photos.length,
+              itemCount: state.photos.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
               ),
               itemBuilder: (context, index) {
-                final photo = viewModel.photos[index];
+                final photo = state.photos[index];
                 return PhotoWidget(
                   photo: photo,
                 );
