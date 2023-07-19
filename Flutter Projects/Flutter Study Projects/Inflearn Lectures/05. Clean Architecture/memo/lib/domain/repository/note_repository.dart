@@ -6,10 +6,10 @@ abstract interface class NoteRepository {
   Future<List<Note>> getNotes();
 
   // note의 id를 가지고 해당 노트만 가져오는 메서드
-  Future<Note> getNoteById(int id);
+  Future<Note?> getNoteById(int id);
 
   // note 생성
-  Future<void> createNote(Note note);
+  Future<void> insertNote(Note note);
 
   // note 업데이트
   Future<void> updateNote(Note note);
