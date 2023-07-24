@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:injectable_practice/ui/main/main_screen.dart';
+import 'package:injectable_practice/core/router.dart';
+import 'package:injectable_practice/di/di_setup.dart';
 
-void main() {
+void main() async {
+  configureDependencies();
+
   runApp(const MyApp());
 }
 
@@ -10,13 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainScreen(),
     );
   }
 }

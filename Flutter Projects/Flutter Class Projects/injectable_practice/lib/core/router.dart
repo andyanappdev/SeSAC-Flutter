@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:injectable_practice/di/di_setup.dart';
 import 'package:injectable_practice/ui/main/main_screen.dart';
 import 'package:injectable_practice/ui/main/main_view_model.dart';
 import 'package:injectable_practice/ui/second/second_screen.dart';
@@ -11,7 +12,7 @@ final router = GoRouter(
       path: '/main',
       builder: (context, state) {
         return ChangeNotifierProvider(
-          create: (_) => MainViewModel(),
+          create: (_) => getIt<MainViewModel>(),
           child: const MainScreen(),
         );
       },
@@ -20,7 +21,7 @@ final router = GoRouter(
       path: '/second',
       builder: (context, state) {
         return ChangeNotifierProvider(
-          create: (_) => MainViewModel(),
+          create: (_) => getIt<MainViewModel>(),
           child: const SecondScreen(),
         );
       },

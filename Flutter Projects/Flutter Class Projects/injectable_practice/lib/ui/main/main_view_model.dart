@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable_practice/data/counter_repository.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class MainViewModel with ChangeNotifier {
   final CounterRepository counterRepository;
 
