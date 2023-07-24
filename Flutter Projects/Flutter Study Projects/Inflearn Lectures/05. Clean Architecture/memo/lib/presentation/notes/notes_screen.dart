@@ -45,23 +45,38 @@ class NotesScreen extends StatelessWidget {
         child: ListView(
           children: state.notes
               .map(
-                (note) => NoteItem(
-                  note: note,
-                  deleteIconTapped: () {
-                    viewModel.onEvent(NotesEvent.deleteNote(note));
-
-                    final snackBar = SnackBar(
-                      content: const Text('Completed deleting the memo'),
-                      action: SnackBarAction(
-                        label: 'Cancel',
-                        onPressed: () {
-                          viewModel.onEvent(const NotesEvent.restoreNote());
-                        },
-                      ),
+                (note) => GestureDetector(
+                  onTap: () async {
+                    bool isSaved = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddEditNoteScreen(
+                                note: note,
+                              )),
                     );
 
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    if (isSaved != null && isSaved == true) {
+                      viewModel.onEvent(const NotesEvent.loadNotes());
+                    }
                   },
+                  child: NoteItem(
+                    note: note,
+                    deleteIconTapped: () {
+                      viewModel.onEvent(NotesEvent.deleteNote(note));
+
+                      final snackBar = SnackBar(
+                        content: const Text('Completed deleting the memo'),
+                        action: SnackBarAction(
+                          label: 'Cancel',
+                          onPressed: () {
+                            viewModel.onEvent(const NotesEvent.restoreNote());
+                          },
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                  ),
                 ),
               )
               .toList(),
