@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:memo/domain/model/note.dart';
 import 'package:memo/presentation/add_edit_note/add_edit_note_screen.dart';
 import 'package:memo/presentation/notes/components/note_item.dart';
 import 'package:memo/presentation/notes/notes_event.dart';
 import 'package:memo/presentation/notes/notes_view_model.dart';
-import 'package:memo/ui/colors.dart';
 import 'package:provider/provider.dart';
 
 class NotesScreen extends StatelessWidget {
@@ -43,12 +41,27 @@ class NotesScreen extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       body: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: ListView(
           children: state.notes
               .map(
                 (note) => NoteItem(
                   note: note,
+                  deleteIconTapped: () {
+                    viewModel.onEvent(NotesEvent.deleteNote(note));
+
+                    final snackBar = SnackBar(
+                      content: const Text('Completed deleting the memo'),
+                      action: SnackBarAction(
+                        label: 'Cancel',
+                        onPressed: () {
+                          viewModel.onEvent(const NotesEvent.restoreNote());
+                        },
+                      ),
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
                 ),
               )
               .toList(),
