@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:memo/domain/model/note.dart';
-import 'package:memo/domain/repository/note_repository.dart';
+import 'package:memo/domain/use_case/use_cases.dart';
 import 'package:memo/presentation/notes/notes_event.dart';
 import 'package:memo/presentation/notes/notes_state.dart';
 
 class NotesViewModel with ChangeNotifier {
-  final NoteRepository repository;
+  final UseCases useCases;
 
   NotesState _state = NotesState();
   // getter
@@ -14,7 +14,7 @@ class NotesViewModel with ChangeNotifier {
   // 삭제한 노트를 임시로 담아둘 글로벌 변수
   Note? _recentlyDeletedNote;
 
-  NotesViewModel(this.repository) {
+  NotesViewModel(this.useCases) {
     _loadNotes();
   }
 
@@ -32,7 +32,7 @@ class NotesViewModel with ChangeNotifier {
   }
 
   Future<void> _loadNotes() async {
-    List<Note> notes = await repository.getNotes();
+    List<Note> notes = await useCases.getNotesUseCase.call();
     _state = _state.copyWith(
       notes: notes,
     );
@@ -40,14 +40,14 @@ class NotesViewModel with ChangeNotifier {
   }
 
   Future<void> _deleteNote(Note note) async {
-    await repository.deleteNote(note); // 노트를 삭제
+    await useCases.deleteNoteUseCase.call(note); // 노트를 삭제
     _recentlyDeletedNote = note; // 삭제한 노트를 임시 글로벌 변수를 생성하여 담아두고
     await _loadNotes(); // 처리가된 노트들을 불러오기
   }
 
   Future<void> _restoreNote() async {
     if (_recentlyDeletedNote != null) {
-      await repository.insertNote(_recentlyDeletedNote!);
+      await useCases.addNoteUseCase.call(_recentlyDeletedNote!);
       _recentlyDeletedNote = null;
 
       await _loadNotes(); // 처리 후 다시 노트 불러오기
