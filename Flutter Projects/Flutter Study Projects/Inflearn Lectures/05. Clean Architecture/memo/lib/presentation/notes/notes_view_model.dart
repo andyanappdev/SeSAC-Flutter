@@ -23,7 +23,7 @@ class NotesViewModel with ChangeNotifier {
       case LoadNotes():
         _loadNotes();
       case DeleteNote():
-        _deleteNote(_recentlyDeletedNote!); // 확인 필요 !!!
+        _deleteNote(event.note);
       case RestoreNote():
         _restoreNote();
     }

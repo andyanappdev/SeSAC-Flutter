@@ -7,7 +7,6 @@ class AddEditNoteViewModel with ChangeNotifier {
   final NoteRepository repository;
 
   int _color = Colors.orange.value;
-
   // getter
   int get color => _color;
 
@@ -18,7 +17,7 @@ class AddEditNoteViewModel with ChangeNotifier {
       case ChangeColor():
         _changeColor(_color);
       case SaveNote():
-      // _saveNote();  // 데이터 전달 방법?? 처리방법??
+        _saveNote(event.id, event.title, event.content);
     }
   }
 
