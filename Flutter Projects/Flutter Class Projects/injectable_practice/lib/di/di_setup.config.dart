@@ -14,6 +14,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:injectable_practice/data/counter.dart' as _i3;
 import 'package:injectable_practice/data/counter_repository.dart' as _i4;
 import 'package:injectable_practice/data/counter_repository_impl.dart' as _i5;
+import 'package:injectable_practice/di/app_module.dart' as _i7;
 import 'package:injectable_practice/ui/main/main_view_model.dart' as _i6;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -27,11 +28,15 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
+    final appModule = _$AppModule();
     gh.singleton<_i3.Counter>(_i3.Counter());
-    gh.singleton<_i4.CounterRepository>(
-        _i5.CounterRepositoryImply(gh<_i3.Counter>()));
+    gh.factory<_i4.CounterRepository>(
+        () => _i5.CounterRepositoryImply(gh<_i3.Counter>()));
     gh.factory<_i6.MainViewModel>(
         () => _i6.MainViewModel(gh<_i4.CounterRepository>()));
+    gh.singleton<String>(appModule.appTitle);
     return this;
   }
 }
+
+class _$AppModule extends _i7.AppModule {}

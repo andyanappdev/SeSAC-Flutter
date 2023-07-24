@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:injectable_practice/di/di_setup.dart';
 import 'package:injectable_practice/ui/main/main_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +12,7 @@ class MainScreen extends StatelessWidget {
     final viewModel = context.watch<MainViewModel>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MainScreen'),
+        title: Text(getIt<String>()),
       ),
       body: Center(
         child: Text(
