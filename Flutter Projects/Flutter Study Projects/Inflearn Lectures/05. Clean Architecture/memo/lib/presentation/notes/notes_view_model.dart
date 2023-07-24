@@ -9,8 +9,9 @@ import 'package:memo/presentation/notes/notes_state.dart';
 class NotesViewModel with ChangeNotifier {
   final UseCases useCases;
 
-  NotesState _state =
-      const NotesState(noteOrder: NoteOrder.date(OrderType.descending()));
+  NotesState _state = const NotesState(
+    noteOrder: NoteOrder.date(OrderType.descending()),
+  );
 
   // getter
   NotesState get state => _state;
@@ -37,6 +38,11 @@ class NotesViewModel with ChangeNotifier {
           noteOrder: noteOrder,
         );
         _loadNotes();
+      case ToggleOrderSection():
+        _state = state.copyWith(
+          isOrderSectionVisible: !state.isOrderSectionVisible,
+        );
+        notifyListeners();
     }
   }
 

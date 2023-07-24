@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memo/domain/model/note.dart';
+import 'package:memo/ui/colors.dart';
 
 class NoteItem extends StatelessWidget {
   final Note note;
@@ -29,7 +30,10 @@ class NoteItem extends StatelessWidget {
                   note.title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .apply(color: darkGray),
                 ),
                 const SizedBox(height: 8),
                 Text(

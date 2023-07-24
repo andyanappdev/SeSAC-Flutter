@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:memo/domain/util/note_order.dart';
 import 'package:memo/presentation/add_edit_note/add_edit_note_screen.dart';
 import 'package:memo/presentation/notes/components/note_item.dart';
 import 'package:memo/presentation/notes/components/order_section.dart';
@@ -23,7 +22,9 @@ class NotesScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              viewModel.onEvent(const NotesEvent.toggleOrderSection());
+            },
             icon: const Icon(Icons.sort),
           ),
         ],
@@ -46,11 +47,16 @@ class NotesScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: ListView(
           children: [
-            OrderSection(
-              noteOrder: state.noteOrder,
-              onOrderChanged: (noteOrder) {
-                viewModel.onEvent(NotesEvent.changeOrder(noteOrder));
-              },
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: state.isOrderSectionVisible
+                  ? OrderSection(
+                      noteOrder: state.noteOrder,
+                      onOrderChanged: (noteOrder) {
+                        viewModel.onEvent(NotesEvent.changeOrder(noteOrder));
+                      },
+                    )
+                  : Container(),
             ),
             ...state.notes
                 .map(
