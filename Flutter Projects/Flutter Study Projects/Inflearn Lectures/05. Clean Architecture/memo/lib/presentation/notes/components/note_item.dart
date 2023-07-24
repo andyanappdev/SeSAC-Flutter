@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:memo/domain/model/note.dart';
-import 'package:memo/ui/colors.dart';
 
 class NoteItem extends StatelessWidget {
   final Note note;

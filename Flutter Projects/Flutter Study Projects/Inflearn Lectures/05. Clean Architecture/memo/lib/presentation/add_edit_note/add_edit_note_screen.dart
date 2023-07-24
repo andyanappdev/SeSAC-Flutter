@@ -1,8 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:memo/domain/model/note.dart';
+import 'package:memo/presentation/add_edit_note/add_edit_note_event.dart';
+import 'package:memo/presentation/add_edit_note/add_edit_note_ui_event.dart';
+import 'package:memo/presentation/add_edit_note/add_edit_note_view_model.dart';
 import 'package:memo/ui/colors.dart';
+import 'package:provider/provider.dart';
 
 class AddEditNoteScreen extends StatefulWidget {
-  const AddEditNoteScreen({super.key});
+  final Note? note;
+
+  const AddEditNoteScreen({super.key, this.note});
 
   @override
   State<AddEditNoteScreen> createState() => _AddEditNoteScreenState();
@@ -11,6 +20,7 @@ class AddEditNoteScreen extends StatefulWidget {
 class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
+  StreamSubscription? _streamSubscription; //
   final List<Color> noteColors = [
     roseBud,
     primrose,
@@ -19,10 +29,34 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
     illusion
   ];
 
-  Color _color = roseBud;
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      final viewModel = context.read<AddEditNoteViewModel>();
+      /* listen
+      StreamSubscription<AddEditNoteUiEvent> listen(
+        void Function(AddEditNoteUiEvent)? onData, {
+        Function? onError,
+        void Function()? onDone,
+        bool? cancelOnError, })
+      Containing class: Stream
+
+      listen은 화면이 사라져도 계속해서 listen 하고 있기 때문에 StreamSubscription을 화면이 사라질때 해제가 필요하다
+      */
+      _streamSubscription = viewModel.eventStream.listen((event) {
+        switch (event) {
+          case SaveNoteTapped():
+            Navigator.pop(context, true);
+        }
+      });
+    });
+  }
 
   @override
   void dispose() {
+    _streamSubscription?.cancel();
     _titleController.dispose();
     _contentController.dispose();
     super.dispose();
@@ -30,14 +64,29 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<AddEditNoteViewModel>();
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          if (_titleController.text.isEmpty ||
+              _contentController.text.isEmpty) {
+            const snackBar =
+                SnackBar(content: Text('Title or Content is Empty'));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+
+          viewModel.onEvent(AddEditNoteEvent.saveNote(
+            widget.note == null ? null : widget.note!.id,
+            _titleController.text,
+            _contentController.text,
+          ));
+        },
         child: const Icon(Icons.save),
       ),
       body: AnimatedContainer(
         padding: const EdgeInsets.fromLTRB(16, 70, 16, 16),
-        color: _color,
+        color: Color(viewModel.color),
         duration: const Duration(milliseconds: 500),
         child: Column(
           children: [
@@ -48,13 +97,12 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
                     (color) => InkWell(
                       //제스처디텍터와 같은 역할, 단 에니메이션 효과있음
                       onTap: () {
-                        setState(() {
-                          _color = color;
-                        });
+                        viewModel
+                            .onEvent(AddEditNoteEvent.changeColor(color.value));
                       },
                       child: _buildBackgroundColor(
                         color: color,
-                        selected: _color == color,
+                        selected: viewModel.color == color.value,
                       ),
                     ),
                   )

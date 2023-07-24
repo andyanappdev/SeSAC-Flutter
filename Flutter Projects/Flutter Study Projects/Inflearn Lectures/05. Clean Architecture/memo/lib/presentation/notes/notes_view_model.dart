@@ -14,7 +14,9 @@ class NotesViewModel with ChangeNotifier {
   // 삭제한 노트를 임시로 담아둘 글로벌 변수
   Note? _recentlyDeletedNote;
 
-  NotesViewModel(this.repository);
+  NotesViewModel(this.repository) {
+    _loadNotes();
+  }
 
   // notes screen에서 필요한 기능
   // 1. 노트 생성, 2. 노트 삭제, 3. 삭제된 노트 restore
