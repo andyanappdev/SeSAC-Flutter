@@ -1,5 +1,7 @@
 import 'package:memo/domain/model/note.dart';
 import 'package:memo/domain/repository/note_repository.dart';
+import 'package:memo/domain/util/note_order.dart';
+import 'package:memo/domain/util/order_type.dart';
 
 // notes screen에 모든 노트를 가져오는 기능
 class GetNotesUseCase {
@@ -7,9 +9,32 @@ class GetNotesUseCase {
 
   GetNotesUseCase(this.repository);
 
-  Future<List<Note>> call() async {
+  Future<List<Note>> call(NoteOrder noteOrder) async {
     List<Note> notes = await repository.getNotes();
-    notes.sort((a, b) => -a.timestamp.compareTo(b.timestamp));
+    switch (noteOrder) {
+      case NoteOrderTitle(:final orderType):
+        switch (orderType) {
+          case Ascending():
+            notes.sort((a, b) => a.title.compareTo(b.title));
+          case Descending():
+            notes.sort((a, b) => -a.title.compareTo(b.title));
+        }
+      case NoteOrderdate(:final orderType):
+        switch (orderType) {
+          case Ascending():
+            notes.sort((a, b) => a.timestamp.compareTo(b.timestamp));
+          case Descending():
+            notes.sort((a, b) => -a.timestamp.compareTo(b.timestamp));
+        }
+      case NoteOrderColor(:final orderType):
+        switch (orderType) {
+          case Ascending():
+            notes.sort((a, b) => a.color.compareTo(b.color));
+          case Descending():
+            notes.sort((a, b) => -a.color.compareTo(b.color));
+        }
+    }
+
     return notes;
   }
 }

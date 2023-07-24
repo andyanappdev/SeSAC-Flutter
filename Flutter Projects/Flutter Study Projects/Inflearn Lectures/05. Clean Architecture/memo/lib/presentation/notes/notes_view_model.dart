@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:memo/domain/model/note.dart';
 import 'package:memo/domain/use_case/use_cases.dart';
+import 'package:memo/domain/util/note_order.dart';
+import 'package:memo/domain/util/order_type.dart';
 import 'package:memo/presentation/notes/notes_event.dart';
 import 'package:memo/presentation/notes/notes_state.dart';
 
 class NotesViewModel with ChangeNotifier {
   final UseCases useCases;
 
-  NotesState _state = NotesState();
+  NotesState _state =
+      const NotesState(noteOrder: NoteOrder.date(OrderType.descending()));
+
   // getter
   NotesState get state => _state;
 
@@ -32,7 +36,7 @@ class NotesViewModel with ChangeNotifier {
   }
 
   Future<void> _loadNotes() async {
-    List<Note> notes = await useCases.getNotesUseCase.call();
+    List<Note> notes = await useCases.getNotesUseCase.call(state.noteOrder);
     _state = _state.copyWith(
       notes: notes,
     );
