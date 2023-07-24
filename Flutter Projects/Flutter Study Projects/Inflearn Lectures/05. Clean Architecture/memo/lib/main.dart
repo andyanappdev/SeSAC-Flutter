@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
               backgroundColor: darkGray,
             ),
         textTheme: Theme.of(context).textTheme.apply(
-              bodyColor: Colors.black,
+              bodyColor: Colors.white,
             ),
       ),
       home: const NotesScreen(),

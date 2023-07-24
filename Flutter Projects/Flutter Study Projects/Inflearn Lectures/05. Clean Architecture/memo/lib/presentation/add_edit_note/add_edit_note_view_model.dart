@@ -26,8 +26,8 @@ class AddEditNoteViewModel with ChangeNotifier {
 
   void onEvent(AddEditNoteEvent event) {
     switch (event) {
-      case ChangeColor():
-        _changeColor(event.color);
+      case ChangeColor(:final color):
+        _changeColor(color);
       case SaveNote():
         _saveNote(event.id, event.title, event.content);
     }

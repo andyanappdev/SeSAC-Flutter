@@ -28,10 +28,15 @@ class NotesViewModel with ChangeNotifier {
     switch (event) {
       case LoadNotes():
         _loadNotes();
-      case DeleteNote():
-        _deleteNote(event.note);
+      case DeleteNote(:final note):
+        _deleteNote(note);
       case RestoreNote():
         _restoreNote();
+      case ChangeOrder(:final noteOrder):
+        _state = state.copyWith(
+          noteOrder: noteOrder,
+        );
+        _loadNotes();
     }
   }
 
