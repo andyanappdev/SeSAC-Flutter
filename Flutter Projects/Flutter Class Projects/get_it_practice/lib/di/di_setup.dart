@@ -9,6 +9,9 @@ Future<void> setup() async {
   // Singleton : 하나의 인스턴스만 존재
   getIt.registerSingleton<Counter>(Counter());
 
+  // getIt.registerSingleton<CounterRepository>(
+  //     CounterRepositoryImply(getIt<Counter>()));
+
   // Factory : 매번 새로운 인스턴스를 생성
   // getIt.registerFactory<Counter>(() => Counter());
 
