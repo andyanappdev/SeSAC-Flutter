@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:memo_refactoring/core/router.dart';
-import 'package:memo_refactoring/di/provider_setup.dart';
+import 'package:memo_refactoring/di/di_setup.dart';
 import 'package:memo_refactoring/ui/colors.dart';
-import 'package:provider/provider.dart';
 
 void main() async {
   // 플랫폼 채널의 위젯 바인딩을 보장
   WidgetsFlutterBinding.ensureInitialized();
 
-  final providers = await getProviders();
+  configureDependencies();
 
-  runApp(MultiProvider(
-    providers: providers,
-    child: const MyApp(),
-  ));
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
