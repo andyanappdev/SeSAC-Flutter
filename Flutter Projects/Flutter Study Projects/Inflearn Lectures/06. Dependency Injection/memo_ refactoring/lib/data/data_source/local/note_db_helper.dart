@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:memo_refactoring/domain/model/note.dart';
 import 'package:sqflite/sqlite_api.dart';
 
+@singleton
 class NoteDbHelper {
   // 사용될 데이터 구현
   Database db;

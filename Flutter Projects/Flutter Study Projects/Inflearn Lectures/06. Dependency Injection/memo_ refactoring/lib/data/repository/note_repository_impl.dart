@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:memo_refactoring/data/data_source/local/note_db_helper.dart';
 import 'package:memo_refactoring/domain/model/note.dart';
 import 'package:memo_refactoring/domain/repository/note_repository.dart';
 
+@Singleton(as: NoteRepository)
 class NoteRepositoryImpl implements NoteRepository {
   final NoteDbHelper db;
 
