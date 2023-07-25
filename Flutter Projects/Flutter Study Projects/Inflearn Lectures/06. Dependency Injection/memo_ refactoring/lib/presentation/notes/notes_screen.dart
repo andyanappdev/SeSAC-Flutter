@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:memo_refactoring/domain/repository/note_repository.dart';
 import 'package:memo_refactoring/presentation/add_edit_note/add_edit_note_screen.dart';
+import 'package:memo_refactoring/presentation/add_edit_note/add_edit_note_view_model.dart';
 import 'package:memo_refactoring/presentation/notes/components/note_item.dart';
 import 'package:memo_refactoring/presentation/notes/components/order_section.dart';
 import 'package:memo_refactoring/presentation/notes/notes_event.dart';
@@ -34,7 +36,14 @@ class NotesScreen extends StatelessWidget {
         onPressed: () async {
           bool? isSaved = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddEditNoteScreen()),
+            MaterialPageRoute(builder: (context) {
+              final repository = context.read<NoteRepository>();
+              final viewModel = AddEditNoteViewModel(repository);
+              return ChangeNotifierProvider(
+                create: (_) => viewModel,
+                child: AddEditNoteScreen(),
+              );
+            }),
           );
 
           if (isSaved != null && isSaved == true) {
