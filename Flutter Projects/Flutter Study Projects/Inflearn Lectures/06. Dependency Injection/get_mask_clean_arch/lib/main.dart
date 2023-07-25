@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_mask_clean_arch/presentation/main/main_screen.dart';
+import 'package:get_mask_clean_arch/presentation/main/main_view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
