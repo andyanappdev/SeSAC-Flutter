@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:memo_refactoring/domain/model/note.dart';
+import 'package:memo_refactoring/domain/repository/title_repository.dart';
 import 'package:memo_refactoring/domain/use_case/use_cases.dart';
 import 'package:memo_refactoring/domain/util/note_order.dart';
 import 'package:memo_refactoring/domain/util/order_type.dart';
@@ -10,6 +11,7 @@ import 'package:memo_refactoring/presentation/notes/notes_state.dart';
 @injectable
 class NotesViewModel with ChangeNotifier {
   final UseCases useCases;
+  final TitleRepository titleRepository;
 
   NotesState _state = const NotesState(
     noteOrder: NoteOrder.date(OrderType.descending()),
@@ -21,7 +23,7 @@ class NotesViewModel with ChangeNotifier {
   // 삭제한 노트를 임시로 담아둘 글로벌 변수
   Note? _recentlyDeletedNote;
 
-  NotesViewModel(this.useCases) {
+  NotesViewModel(this.useCases, this.titleRepository) {
     _loadNotes();
   }
 
