@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:memo_refactoring/domain/model/note.dart';
 import 'package:memo_refactoring/domain/repository/note_repository.dart';
 import 'package:memo_refactoring/presentation/add_edit_note/add_edit_note_event.dart';
 import 'package:memo_refactoring/presentation/add_edit_note/add_edit_note_ui_event.dart';
 import 'package:memo_refactoring/ui/colors.dart';
 
+@injectable
 class AddEditNoteViewModel with ChangeNotifier {
   final NoteRepository repository;
 
