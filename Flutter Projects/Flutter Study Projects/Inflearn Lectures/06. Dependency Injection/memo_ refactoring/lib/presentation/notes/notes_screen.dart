@@ -74,9 +74,15 @@ class NotesScreen extends StatelessWidget {
                       bool isSaved = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AddEditNoteScreen(
-                                  note: note,
-                                )),
+                          builder: (context) {
+                            final repository = context.read<NoteRepository>();
+                            final viewModel = AddEditNoteViewModel(repository);
+                            return ChangeNotifierProvider(
+                              create: (_) => viewModel,
+                              child: AddEditNoteScreen(note: note),
+                            );
+                          },
+                        ),
                       );
 
                       if (isSaved != null && isSaved == true) {
