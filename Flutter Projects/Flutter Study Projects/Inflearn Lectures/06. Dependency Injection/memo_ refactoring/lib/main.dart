@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:memo_refactoring/core/router.dart';
 import 'package:memo_refactoring/di/provider_setup.dart';
-import 'package:memo_refactoring/presentation/notes/notes_screen.dart';
 import 'package:memo_refactoring/ui/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -41,7 +42,6 @@ class MyApp extends StatelessWidget {
               bodyColor: Colors.white,
             ),
       ),
-      home: const NotesScreen(),
     );
   }
 }
