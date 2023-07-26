@@ -12,8 +12,14 @@ class MainScreen extends StatelessWidget {
     final state = viewModel.state;
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('List of pharmacies stocking masks: ${state.stores.length}곳'),
+        title: Text(
+          'List of Pharmacies stocking Masks: ${state.stores.length}곳',
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
       ),
       body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
