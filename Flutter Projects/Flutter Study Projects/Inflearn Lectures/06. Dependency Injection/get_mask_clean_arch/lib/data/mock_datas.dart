@@ -4,8 +4,11 @@ import 'package:get_mask_clean_arch/domain/model/store.dart';
 import 'package:get_mask_clean_arch/domain/permission/location_permission_handler.dart';
 import 'package:get_mask_clean_arch/domain/repository/location_repository.dart';
 import 'package:get_mask_clean_arch/domain/repository/store_repository.dart';
+import 'package:injectable/injectable.dart';
 
 // store mock data
+@dev
+@Singleton(as: StoreRepository)
 class MockStoreRepositoryImpl implements StoreRepository {
   @override
   Future<List<Store>> getStores() async {
@@ -38,6 +41,8 @@ class MockStoreRepositoryImpl implements StoreRepository {
 }
 
 // 현재 위치 mock data
+@dev
+@Singleton(as: LocationRepository)
 class MockLocationRepositoryImpl implements LocationRepository {
   @override
   Future<Location> getLocation() async {
@@ -46,6 +51,8 @@ class MockLocationRepositoryImpl implements LocationRepository {
 }
 
 // 권한 mock data
+@dev
+@Singleton(as: LocationPermissionHandler)
 class MockLocationPermissionHandler implements LocationPermissionHandler {
   @override
   Future<Permission> checkPermission() async {

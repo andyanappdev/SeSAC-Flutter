@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get_mask_clean_arch/data/mock_datas.dart';
-import 'package:get_mask_clean_arch/domain/use_case/get_near_by_stores_use_case.dart';
+import 'package:get_mask_clean_arch/di/di_setup.dart';
 import 'package:get_mask_clean_arch/presentation/main/main_screen.dart';
 import 'package:get_mask_clean_arch/presentation/main/main_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
@@ -22,15 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: ChangeNotifierProvider(
-        create: (BuildContext context) {
-          return MainViewModel(
-            GetNearByStoresUseCase(
-              storeRepository: MockStoreRepositoryImpl(),
-              locationRepository: MockLocationRepositoryImpl(),
-              locationPermissionHandler: MockLocationPermissionHandler(),
-            ),
-          );
-        },
+        create: (BuildContext context) => getIt<MainViewModel>(),
         child: const MainScreen(),
       ),
     );
