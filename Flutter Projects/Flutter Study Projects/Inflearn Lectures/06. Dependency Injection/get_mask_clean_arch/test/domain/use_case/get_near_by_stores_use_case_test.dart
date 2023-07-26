@@ -1,4 +1,4 @@
-import 'package:get_mask_clean_arch/data/mock_datas.dart';
+import 'package:get_mask_clean_arch/data/data_source/local/mock_datas.dart';
 import 'package:get_mask_clean_arch/domain/use_case/get_near_by_stores_use_case.dart';
 import 'package:test/test.dart';
 

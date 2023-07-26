@@ -41,7 +41,7 @@ class MockStoreRepositoryImpl implements StoreRepository {
 }
 
 // 현재 위치 mock data
-@dev
+// @dev
 @Singleton(as: LocationRepository)
 class MockLocationRepositoryImpl implements LocationRepository {
   @override
@@ -51,7 +51,7 @@ class MockLocationRepositoryImpl implements LocationRepository {
 }
 
 // 권한 mock data
-@dev
+// @dev
 @Singleton(as: LocationPermissionHandler)
 class MockLocationPermissionHandler implements LocationPermissionHandler {
   @override
