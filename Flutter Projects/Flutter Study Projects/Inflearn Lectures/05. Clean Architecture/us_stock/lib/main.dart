@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:us_stock/data/data_source/local/company_listing_entity.dart';
 import 'package:us_stock/util/color_schemes.dart';
 
 void main() {
+  // Register Adapter
+  Hive.registerAdapter(CompanyListingEntityAdapter());
   runApp(const MyApp());
 }
 
