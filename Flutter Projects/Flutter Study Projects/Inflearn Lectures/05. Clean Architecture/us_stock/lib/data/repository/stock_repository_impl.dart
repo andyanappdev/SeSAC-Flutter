@@ -1,7 +1,7 @@
 import 'package:us_stock/data/csv/company_listing_parser.dart';
 import 'package:us_stock/data/data_source/local/company_listing_entity.dart';
 import 'package:us_stock/data/data_source/local/stock_dao.dart';
-import 'package:us_stock/data/data_source/remote/stokc_api.dart';
+import 'package:us_stock/data/data_source/remote/stock_api.dart';
 import 'package:us_stock/data/mapper/company_mapper.dart';
 import 'package:us_stock/domain/model/company_listing.dart';
 import 'package:us_stock/domain/repository/stock_repository.dart';
