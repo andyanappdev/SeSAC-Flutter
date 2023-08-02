@@ -1,3 +1,4 @@
+import 'package:us_stock/data/csv/company_listing_parser.dart';
 import 'package:us_stock/data/data_source/local/company_listing_entity.dart';
 import 'package:us_stock/data/data_source/local/stock_dao.dart';
 import 'package:us_stock/data/data_source/remote/stokc_api.dart';
@@ -9,6 +10,7 @@ import 'package:us_stock/util/result.dart';
 class StockRepositoryImpl implements StockRepository {
   final StockApi _api;
   final StockDao _dao;
+  final _parser = CompanyListingParser();
 
   StockRepositoryImpl(this._api, this._dao);
 
@@ -30,9 +32,16 @@ class StockRepositoryImpl implements StockRepository {
 
     // 리모트에서 가져오기
     try {
-      final remoteListings = await _api.getListings();
-      // TODO : CSV 파일 파싱하여 변환 코드 필요
-      return Result.success([]);
+      final response = await _api.getListings();
+      final remoteListings = await _parser.parse(response.body);
+
+      // 기존에 있던 cache를 비워주고 (비워주는 작업이 없으면 계속해서 add 되기 때문)
+      await _dao.clearCompanyListings();
+      // 리모트에서 가져온 데이터를 cache에 추가
+      await _dao.insertCompanyListings(
+          remoteListings.map((e) => e.toCompanyListingEntity()).toList());
+
+      return Result.success(remoteListings);
     } catch (e) {
       return Result.error(Exception('failed data load from Remote'));
     }
