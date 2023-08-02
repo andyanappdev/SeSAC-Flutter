@@ -5,12 +5,12 @@ class StockApi {
   static const apiKey = 'T4RJ6LXYUECGJZSE';
 
   // Client 정의 (test code 작성 및 client 교체를 위해서)
-  final http.Client client;
+  final http.Client _client;
 
-  StockApi(this.client);
+  StockApi({http.Client? client}) : _client = (client ?? http.Client());
 
   Future<http.Response> getListings({String apiKey = apiKey}) async {
-    return await client.get(Uri.parse(
+    return await _client.get(Uri.parse(
         'https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=$apiKey'));
   }
 }
