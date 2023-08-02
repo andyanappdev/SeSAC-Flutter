@@ -45,3 +45,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/// 참고 source : https://github.com/junsuk5/flutter-clean-architecture-course/tree/master/note_app
