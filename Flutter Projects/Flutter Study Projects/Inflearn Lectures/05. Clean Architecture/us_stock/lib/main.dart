@@ -6,28 +6,31 @@ import 'package:us_stock/data/data_source/local/company_listing_entity.dart';
 import 'package:us_stock/data/data_source/local/stock_dao.dart';
 import 'package:us_stock/data/data_source/remote/stock_api.dart';
 import 'package:us_stock/data/repository/stock_repository_impl.dart';
+import 'package:us_stock/domain/repository/stock_repository.dart';
 import 'package:us_stock/presentation/company_listings/company_listings_screen.dart';
 import 'package:us_stock/presentation/company_listings/company_listings_view_model.dart';
 import 'package:us_stock/util/color_schemes.dart';
+import 'package:get_it/get_it.dart';
 
 void main() async {
   // Initializes Hive with a valid directory in your app files.
   await Hive.initFlutter();
   // Register Adapter
   Hive.registerAdapter(CompanyListingEntityAdapter());
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (_) => CompanyListingsViewModel(
-          StockRepositoryImpl(
-            StockApi(),
-            StockDao(),
-          ),
-        ),
-      )
-    ],
-    child: MyApp(),
-  ));
+
+  final repository = StockRepositoryImpl(StockApi(), StockDao());
+
+  GetIt.instance.registerSingleton<StockRepository>(repository);
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (_) => CompanyListingsViewModel(repository)),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
