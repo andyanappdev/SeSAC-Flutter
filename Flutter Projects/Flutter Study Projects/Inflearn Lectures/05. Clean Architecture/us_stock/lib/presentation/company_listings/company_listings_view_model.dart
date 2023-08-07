@@ -9,12 +9,10 @@ import 'package:us_stock/util/result.dart';
 class CompanyListingsViewModel with ChangeNotifier {
   final StockRepository _repository;
 
-  CompanyListingsState _state = CompanyListingsState();
+  CompanyListingsState _state = const CompanyListingsState();
+  CompanyListingsState get state => _state; // getter
 
   Timer? _debounce; // debounce용 타이머
-
-  // getter
-  CompanyListingsState get state => _state;
 
   CompanyListingsViewModel(this._repository) {
     _getCompanyListings();
