@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:us_stock/data/csv/company_listing_parser.dart';
+import 'package:us_stock/data/csv/intraday_info_parser.dart';
 import 'package:us_stock/data/data_source/local/company_listing_entity.dart';
 import 'package:us_stock/data/data_source/local/stock_dao.dart';
 import 'package:us_stock/data/data_source/remote/company_info_dto.dart';
@@ -8,13 +9,15 @@ import 'package:us_stock/data/data_source/remote/stock_api.dart';
 import 'package:us_stock/data/mapper/company_mapper.dart';
 import 'package:us_stock/domain/model/company_info.dart';
 import 'package:us_stock/domain/model/company_listing.dart';
+import 'package:us_stock/domain/model/intraday_info.dart';
 import 'package:us_stock/domain/repository/stock_repository.dart';
 import 'package:us_stock/util/result.dart';
 
 class StockRepositoryImpl implements StockRepository {
   final StockApi _api;
   final StockDao _dao;
-  final _parser = CompanyListingParser();
+  final _companyListingsParser = CompanyListingParser();
+  final _intradayInfoParser = IntradayInfoParser();
 
   StockRepositoryImpl(this._api, this._dao);
 
@@ -37,7 +40,7 @@ class StockRepositoryImpl implements StockRepository {
     // 리모트에서 가져오기
     try {
       final response = await _api.getListings();
-      final remoteListings = await _parser.parse(response.body);
+      final remoteListings = await _companyListingsParser.parse(response.body);
 
       // 기존에 있던 cache를 비워주고 (비워주는 작업이 없으면 계속해서 add 되기 때문)
       await _dao.clearCompanyListings();
@@ -60,6 +63,18 @@ class StockRepositoryImpl implements StockRepository {
     } catch (e) {
       return Result.error(
           Exception('Failed Load Company Info: ${e.toString()}'));
+    }
+  }
+
+  @override
+  Future<Result<List<IntradayInfo>>> getIntradayInfo(String symbol) async {
+    try {
+      final response = await _api.getIntraday(symbol: symbol);
+      final results = await _intradayInfoParser.parse(response.body);
+      return Result.success(results);
+    } catch (e) {
+      return Result.error(
+          Exception('Failed Load Intraday Info: ${e.toString()}'));
     }
   }
 }
