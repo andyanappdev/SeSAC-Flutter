@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:us_stock/data/csv/company_listing_parser.dart';
 import 'package:us_stock/data/data_source/local/company_listing_entity.dart';
 import 'package:us_stock/data/data_source/local/stock_dao.dart';
+import 'package:us_stock/data/data_source/remote/company_info_dto.dart';
 import 'package:us_stock/data/data_source/remote/stock_api.dart';
 import 'package:us_stock/data/mapper/company_mapper.dart';
+import 'package:us_stock/domain/model/company_info.dart';
 import 'package:us_stock/domain/model/company_listing.dart';
 import 'package:us_stock/domain/repository/stock_repository.dart';
 import 'package:us_stock/util/result.dart';
@@ -44,6 +48,18 @@ class StockRepositoryImpl implements StockRepository {
       return Result.success(remoteListings);
     } catch (e) {
       return Result.error(Exception('failed data load from Remote'));
+    }
+  }
+
+  @override
+  Future<Result<CompanyInfo>> getCompanyInfo(String symbol) async {
+    try {
+      final response = await _api.getCompanyInfo(symbol: symbol);
+      final companyInfoDto = CompanyInfoDto.fromJson(jsonDecode(response.body));
+      return Result.success(companyInfoDto.toCompanyInfo());
+    } catch (e) {
+      return Result.error(
+          Exception('Failed Load Company Info: ${e.toString()}'));
     }
   }
 }
