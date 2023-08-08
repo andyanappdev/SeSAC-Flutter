@@ -19,15 +19,15 @@ class CompanyListingsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            topSection(context, viewModel),
-            listViewSection(state, viewModel),
+            _topSection(context, viewModel),
+            _listViewSection(state, viewModel),
           ],
         ),
       ),
     );
   }
 
-  Widget topSection(BuildContext context, viewModel) {
+  Widget _topSection(BuildContext context, viewModel) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: TextField(
@@ -56,7 +56,7 @@ class CompanyListingsScreen extends StatelessWidget {
     );
   }
 
-  Widget listViewSection(CompanyListingsState state, viewModel) {
+  Widget _listViewSection(CompanyListingsState state, viewModel) {
     return Expanded(
       child: RefreshIndicator(
         onRefresh: () async {

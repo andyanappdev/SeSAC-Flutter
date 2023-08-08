@@ -49,5 +49,6 @@ class CompanyInfoViewModel with ChangeNotifier {
           errorMessage: e.toString(),
         );
     }
+    notifyListeners();
   }
 }

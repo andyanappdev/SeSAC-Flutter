@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 class StockApi {
   static const baseUrl = 'https://www.alphavantage.co';
   static const apiKey = 'T4RJ6LXYUECGJZSE';
-  static const interval = '5min';
+  static const interval = '60min';
 
   // Client 정의 (test code 작성 및 client 교체를 위해서)
   final http.Client _client;
