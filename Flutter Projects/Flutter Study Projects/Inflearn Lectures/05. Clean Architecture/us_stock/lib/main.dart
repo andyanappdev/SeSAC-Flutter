@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -12,11 +13,14 @@ import 'package:us_stock/presentation/company_listings/company_listings_view_mod
 import 'package:us_stock/util/color_schemes.dart';
 import 'package:get_it/get_it.dart';
 
-void main() async {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   // Initializes Hive with a valid directory in your app files.
   await Hive.initFlutter();
   // Register Adapter
   Hive.registerAdapter(CompanyListingEntityAdapter());
+
+  await dotenv.load(fileName: '.env');
 
   final repository = StockRepositoryImpl(StockApi(), StockDao());
 
@@ -28,7 +32,7 @@ void main() async {
         ChangeNotifierProvider(
             create: (_) => CompanyListingsViewModel(repository)),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
