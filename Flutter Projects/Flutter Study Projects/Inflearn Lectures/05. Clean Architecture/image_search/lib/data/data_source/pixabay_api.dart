@@ -1,15 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_search/data/data_source/result.dart';
 
 class PixabayApi {
+  static const baseUrl = 'https://pixabay.com/api/';
+  final key = dotenv.get('key');
   final http.Client client;
 
   PixabayApi(this.client);
-
-  static const baseUrl = 'https://pixabay.com/api/';
-  static const key = '38286837-4dd42efa00b62bbc0137718e6';
 
   Future<Result<Iterable>> fetch(String query) async {
     try {
